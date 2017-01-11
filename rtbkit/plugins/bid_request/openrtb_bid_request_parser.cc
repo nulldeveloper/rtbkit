@@ -196,7 +196,7 @@ onBidRequest(OpenRTB::BidRequest & br) {
 
     ctx.br->auctionId = br.id;
 
-    ctx.br->isTest = br.test;
+    ctx.br->isTest = br.test == 1;
 
     // Check for at to be 1 or 2
     if(br.at.val == 1 || br.at.val == 2)
