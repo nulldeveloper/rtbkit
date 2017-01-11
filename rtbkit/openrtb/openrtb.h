@@ -671,6 +671,29 @@ struct Video {
     Json::Value ext;            ///< Extensions go here, new in OpenRTB 2.1
 };
 
+/*****************************************************************************/
+/* Native                                                                    */
+/*****************************************************************************/
+
+/** 3.3.5 Native Object
+
+    The “video” object must be included directly in the impression object if
+    the impression offered for auction is an in-stream video ad opportunity.
+
+    Note that for the video object, many of the fields are non-essential for
+    a minimally viable exchange interfaces.  These parameters do not
+    necessarily need to be specified to the bidder, if they are always the
+    same for all impression, of if the exchange chooses not to supply the
+    additional information to the bidder.
+*/
+struct Native {
+    ~Native();
+    Datacratic::UnicodeString request;
+    Datacratic::UnicodeString ver;
+    Datacratic::List<ApiFramework> api;
+    Datacratic::List<CreativeAttribute> battr;
+    Json::Value ext;
+};
 
 /*****************************************************************************/
 /* PRODUCER / PUBLISHER                                                      */
@@ -759,6 +782,7 @@ struct PMP { // New in OpenRTB 2.2
 struct Impression {
     ~Impression();
     Datacratic::Id id;                             ///< Impression ID within BR
+    Datacratic::Optional<Native> native;
     Datacratic::Optional<Banner> banner;           ///< If it's a banner ad
     Datacratic::Optional<Video> video;             ///< If it's a video ad
     Datacratic::UnicodeString displaymanager;          ///< What renders the ad
@@ -922,6 +946,7 @@ struct Geo {
     Datacratic::UnicodeString city;        ///< City name (UN Code for Trade and Transport Loc)
     Datacratic::UnicodeString zip;             ///< Zip or postal code
     LocationType type;      ///< Source of Geo data (table 6.15)
+    Datacratic::TaggedInt utcoffset;
     Json::Value ext;        ///< Extensions go here, new in OpenRTB 2.1
 
     /// Datacratic extensions
@@ -959,6 +984,7 @@ struct Device {
     Datacratic::TaggedBool dnt;        ///< If 1 then do not track is on
     Datacratic::UnicodeString ua;         ///< User agent of device
     std::string ip;             ///< IP address of device
+    std::string lmt;
     Datacratic::Optional<Geo> geo;     ///< Geolocation of device
     std::string didsha1;        ///< Device ID: SHA1
     std::string didmd5;         ///< Device ID: MD5
@@ -973,6 +999,13 @@ struct Device {
     Datacratic::UnicodeString model;      ///< Device model
     Datacratic::UnicodeString os;         ///< Device OS
     Datacratic::UnicodeString osv;         ///< Device OS version
+
+    Datacratic::UnicodeString hwv;
+    Datacratic::TaggedInt h;
+    Datacratic::TaggedInt w;
+    Datacratic::TaggedInt ppi;
+    Datacratic::TaggedDoubleDef<0> pxratio;
+
     Datacratic::TaggedBool js;         ///< Javascript is supported? 1 or 0
     ConnectionType connectiontype;    ///< Connection type (table 6.10)
     DeviceType devicetype; ///< Device type (table 6.16)
@@ -1121,6 +1154,7 @@ struct BidRequest {
     Datacratic::Optional<App> app;
     Datacratic::Optional<Device> device;
     Datacratic::Optional<User> user;
+    Datacratic::TaggedInt test;
     AuctionType at;                    ///< Auction type (1=first/2=second party)
     Datacratic::TaggedInt tmax;                    ///< Max time avail in ms
     std::vector<std::string> wseat;              ///< Allowed buyer seats
@@ -1169,9 +1203,11 @@ struct Bid {
     Datacratic::UnicodeString nurl;                  ///< Win notice/ad markup URL
     Datacratic::UnicodeString adm;                   ///< Ad markup
     std::vector<std::string> adomain;       ///< Advertiser domains
+    Datacratic::UnicodeString bundle;
     Datacratic::UnicodeString iurl;                  ///< Image URL for content checking
     Datacratic::Id cid;                       ///< Campaign ID
     Datacratic::Id crid;                      ///< Creative ID
+    std::vector<ContentCategory> cat;
     Datacratic::List<CreativeAttribute> attr; ///< Creative attributes
     std::string dealid;                     ///< unique id for the deal associated with bid
                                             ///< if its in bid request, required in bid response

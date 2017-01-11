@@ -295,6 +295,12 @@ struct DefaultDescription<OpenRTB::Site>
     DefaultDescription();
 };
 
+template <>
+struct DefaultDescription<OpenRTB::Native>
+    : public StructureDescription<OpenRTB::Native> {
+    DefaultDescription();
+};
+
 template<>
 struct DefaultDescription<OpenRTB::App>
     : public StructureDescription<OpenRTB::App> {

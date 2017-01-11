@@ -43,6 +43,7 @@ DefaultDescription()
     addField("app", &BidRequest::app, "Information about the app the request is being shown in");
     addField("device", &BidRequest::device, "Information about the device on which the request was made");
     addField("user", &BidRequest::user, "Information about the user who is making the request");
+    addField("test", &BidRequest::test, "Flag for testing");
     addField("at", &BidRequest::at, "Type of auction: 1(st) or 2(nd)");
     addField("tmax", &BidRequest::tmax, "Maximum response time (ms)");
     addField("wseat", &BidRequest::wseat, "Allowable seats");
@@ -60,6 +61,7 @@ DefaultDescription()
 {
     addField("id", &Impression::id, "Impression ID within bid request",
              new StringIdDescription());
+    addField("native", &Impression::native, "Native information if a native ad");
     addField("banner", &Impression::banner, "Banner information if a banner ad");
     addField("video", &Impression::video, "Video information if a video ad");
     addField("displaymanager", &Impression::displaymanager, "Display manager that renders the ad");
@@ -99,6 +101,16 @@ DefaultDescription()
     addField("embeddable", &Content::embeddable, "1 if embeddable, 0 otherwise");
     addField("language", &Content::language, "ISO 639-1 Content language");
     addField("ext", &Content::ext, "Extensions to the protocol go here");
+}
+
+DefaultDescription<OpenRTB::Native>::
+DefaultDescription()
+{
+    addField("request", &Native::request, "Request payload complying with the Native Ad Specification.");
+    addField("ver", &Native::ver, "Version of the Native Ad Specification to which request complies.");
+    addField("api", &Native::api, "List of supported API frameworks for this impression.");
+    addField("battr", &Native::battr, "Blocked creative attributes.");
+    addField("ext", &Native::ext, "Extensions to the protocol go here");
 }
 
 DefaultDescription<OpenRTB::Banner>::
@@ -213,6 +225,7 @@ DefaultDescription()
     addField("city", &Geo::city, "City name (UN Code for Trade and Transport)");
     addField("zip", &Geo::zip, "Zip or postal code");
     addField("type", &Geo::type, "Source of location data");
+    addField("utcoffset", &Geo::utcoffset, "UTC offset");
     addField("ext", &Geo::ext, "Extensions to the protocol go here");
     /// Datacratic extension
     addField("dma", &Geo::dma, "DMA code");
@@ -226,6 +239,7 @@ DefaultDescription()
     addField("dnt", &Device::dnt, "Is do not track set");
     addField("ua", &Device::ua, "User agent of device");
     addField("ip", &Device::ip, "IP address of device");
+    addField("lmt", &Device::lmt, "limit");
     addField("geo", &Device::geo, "Geographic location of device");
     addField("didsha1", &Device::didsha1, "SHA-1 Device ID");
     addField("didmd5", &Device::didmd5, "MD5 Device ID");
@@ -240,6 +254,11 @@ DefaultDescription()
     addField("model", &Device::model, "Device model");
     addField("os", &Device::os, "Device OS");
     addField("osv", &Device::osv, "Device OS version");
+    addField("hwv", &Device::hwv, "Hardware version of the device");
+    addField("h", &Device::h, "Physical height of the screen in pixels.");
+    addField("w", &Device::w, "Physical width of the screen in pixels.");
+    addField("ppi", &Device::ppi, "Screen size as pixels per linear inch.");
+    addField("pxratio", &Device::pxratio, "The ratio of physical pixels to device independent pixels");
     addField("js", &Device::js, "Javascript is supported");
     addField("connectiontype", &Device::connectiontype, "Device connection type");
     addField("devicetype", &Device::devicetype, "Device type");
@@ -303,11 +322,13 @@ DefaultDescription()
     addField("nurl", &Bid::nurl, "Win notice/ad markup URL");
     addField("adm", &Bid::adm, "Ad markup");
     addField("adomain", &Bid::adomain, "Advertiser domain(s)");
+    addField("bundle", &Bid::bundle, "Bundle");
     addField("iurl", &Bid::iurl, "Image URL for content checking");
     addField("cid", &Bid::cid, "Campaign ID",
              new StringIdDescription());
     addField("crid", &Bid::crid, "Creative ID",
              new StringIdDescription());
+    addField("cat", &Bid::cat, "category");
     addField("attr", &Bid::attr, "Creative attributes");
     addField("dealid", &Bid::dealid, "Deal Id for PMP Auction");
     addField("w", &Bid::w, "width of ad in pixels");
