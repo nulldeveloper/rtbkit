@@ -47,6 +47,7 @@ toBidRequest(const RTBKIT::BidRequest & br) {
     result.at = br.auctionType;
     result.tmax = br.timeAvailableMs;
     result.unparseable = br.unparseable;
+    result.test = br.isTest;
 
     result.imp.reserve(br.imp.size());
 
@@ -194,6 +195,8 @@ OpenRTBBidRequestParser::
 onBidRequest(OpenRTB::BidRequest & br) {
 
     ctx.br->auctionId = br.id;
+
+    ctx.br->isTest = br.test;
 
     // Check for at to be 1 or 2
     if(br.at.val == 1 || br.at.val == 2)
