@@ -1,3 +1,4 @@
 #!/bin/bash
 
-make compile NODEJS_ENABLED=0
+make compile -j 4 NODEJS_ENABLED=0
+make test NODEJS_ENABLED=0
