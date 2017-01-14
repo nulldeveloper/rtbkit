@@ -596,7 +596,7 @@ struct AuctionType: public Datacratic::TaggedEnum<AuctionType, 2> {
 /* BANNER                                                                    */
 /*****************************************************************************/
 
-/** 3.3.3 Banner Object
+/** 3.2.3 Banner Object
 
     The “banner” object must be included directly in the impression object
     if the impression offered for auction is display or rich media, or it
@@ -633,7 +633,7 @@ struct Banner {
 /* VIDEO                                                                     */
 /*****************************************************************************/
 
-/** 3.3.4 Video Object
+/** 3.2.4 Video Object
 
     The “video” object must be included directly in the impression object if
     the impression offered for auction is an in-stream video ad opportunity.  
@@ -675,7 +675,7 @@ struct Video {
 /* Native                                                                    */
 /*****************************************************************************/
 
-/** 3.3.5 Native Object
+/** 3.2.5 Native Object
 
     The “video” object must be included directly in the impression object if
     the impression offered for auction is an in-stream video ad opportunity.
@@ -699,7 +699,7 @@ struct Native {
 /* PRODUCER / PUBLISHER                                                      */
 /*****************************************************************************/
 
-/** 3.3.8 Publisher Object
+/** 3.2.8 Publisher Object
 
     The publisher object itself and all of its parameters are optional, so
     default values are not provided.  If an optional parameter is not
@@ -715,7 +715,7 @@ struct Publisher {
     Json::Value ext;             ///< Extensions go here, new in OpenRTB 2.1
 };
 
-/** 3.3.9 Producer Object
+/** 3.2.10 Producer Object
 
     The producer is useful when content where the ad is shown is syndicated,
     and may appear on a completely different publisher.  The producer object
@@ -731,7 +731,7 @@ typedef Publisher Producer;  /// They are the same...
 /* DEAL                                                                      */
 /*****************************************************************************/
 
-/** 3.3.17 Direct deals object
+/** 3.2.18 Direct deals object
 
     A "deal" object constitutes a deal struck a priori between a buyer and a seller and indicates that
     this impression is available under the terms of that deal.
@@ -752,7 +752,7 @@ struct Deal { // New in OpenRTB 2.2
 /* PMP                                                                       */
 /*****************************************************************************/
 
-/** 3.3.16 PMP object
+/** 3.2.17 PMP object
 
     The “pmp” object contains a parent object for usage within the context of private marketplaces 
     and the use of the RTB protocol to execute Direct Deals.
@@ -769,7 +769,7 @@ struct PMP { // New in OpenRTB 2.2
 /* IMPRESSION                                                                */
 /*****************************************************************************/
 
-/** 3.3.2 Impression Object 
+/** 3.2.2 Impression Object
 
     The “imp” object describes the ad position or impression being auctioned.
     A single bid request can include multiple “imp” objects, a use case for
@@ -802,7 +802,7 @@ struct Impression {
 /* CONTENT                                                                   */
 /*****************************************************************************/
 
-/** 3.3.7 Content Object
+/** 3.2.9 Content Object
 
     The content object itself and all of its parameters are optional, so
     default values are not provided. If an optional parameter is not specified,
@@ -869,7 +869,7 @@ struct Context {
 /* SITE                                                                      */
 /*****************************************************************************/
 
-/** 3.3.5 Site Object
+/** 3.2.6 Site Object
 
     A site object should be included if the ad supported content is part of
     a website (as opposed to an application).  A bid request must not contain
@@ -895,7 +895,7 @@ struct Site: public Context, public SiteInfo {
 /* APP                                                                       */
 /*****************************************************************************/
 
-/** 3.3.6 App Object
+/** 3.2.7 App Object
 
     An “app” object should be included if the ad supported content is part of
     a mobile application (as opposed to a mobile website).  A bid request
@@ -921,7 +921,7 @@ struct App: public Context, public AppInfo {
 /* GEO                                                                       */
 /*****************************************************************************/
 
-/** 3.3.11 Geo Object
+/** 3.2.12 Geo Object
 
     The geo object itself and all of its parameters are optional, so default
     values are not provided. If an optional parameter is not specified, it
@@ -960,7 +960,7 @@ struct Geo {
 /* DEVICE                                                                    */
 /*****************************************************************************/
 
-/** 3.3.10 Device Object
+/** 3.2.11 Device Object
 
     The “device” object provides information pertaining to the device
     including its hardware, platform, location, and carrier.
@@ -1019,7 +1019,7 @@ struct Device {
 /* SEGMENT                                                                   */
 /*****************************************************************************/
 
-/** 3.3.14 Segment Object
+/** 3.2.15 Segment Object
 
     The data and segment objects together allow data about the user to be
     passed to bidders in the bid request.  Segment objects convey specific
@@ -1045,7 +1045,7 @@ struct Segment {
 /* DATA                                                                      */
 /*****************************************************************************/
 
-/** 3.3.13 Data Object
+/** 3.2.14 Data Object
 
     The data and segment objects together allow data about the user to be
     passed to bidders in the bid request.  This data may be from multiple
@@ -1073,7 +1073,7 @@ struct Data {
 /* USER                                                                      */
 /*****************************************************************************/
 
-/** 3.3.12 User Object
+/** 3.2.13 User Object
 
     The “user” object contains information known or derived about the
     human user of the device.  Note that the user ID is an exchange
@@ -1110,7 +1110,7 @@ struct User {
 /* REGULATIONS                                                               */
 /*****************************************************************************/
 
-/** 3.3.15 Regulations object
+/** 3.2.16 Regulations object
   
     The “regs” object contains any legal, governmental, or industry regulations that apply to the 
     request. The first regulation added signal whether or not the request falls under the United States 
@@ -1132,7 +1132,7 @@ struct Regulations { // New in OpenRTB 2.2
 /*****************************************************************************/
 
 
-/** 3.3.1 Bid Request Object
+/** 3.2.1 Bid Request Object
 
     The top-level bid request object contains a globally unique bid request
     or auction ID. This “id” attribute is required as is at least one “imp”
@@ -1172,7 +1172,7 @@ struct BidRequest {
 /* BID                                                                       */
 /*****************************************************************************/
 
-/** 4.3.3 Bid Object
+/** 4.2.3 Bid Object
 
     For each bid, the “nurl” attribute contains the win notice URL.  If the
     bidder wins the impression, the exchange calls this notice URL a) to
@@ -1221,7 +1221,7 @@ struct Bid {
 /* SEAT BID                                                                  */
 /*****************************************************************************/
 
-/** 4.3.2 Seat Bid Object
+/** 4.2.2 Seat Bid Object
 
     A bid response can contain multiple “seatbid” objects, each on behalf of
     a different bidder seat.   Since a bid request can include multiple
@@ -1246,7 +1246,7 @@ struct SeatBid {
 /* BID RESPONSE                                                              */
 /*****************************************************************************/
 
-/** 4.3.1 Bid Response Object
+/** 4.2.1 Bid Response Object
 
     The top-level bid response object is defined below. The “id” attribute
     is a reflection of the bid request ID for logging purposes. Similarly,
