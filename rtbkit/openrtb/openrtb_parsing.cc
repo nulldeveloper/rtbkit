@@ -51,6 +51,7 @@ DefaultDescription()
     addField("cur", &BidRequest::cur, "List of acceptable currencies to bid in");
     addField("bcat", &BidRequest::bcat, "Blocked advertiser content categories");
     addField("badv", &BidRequest::badv, "Blocked adversiser domains");
+    addField("bapp", &BidRequest::bapp, "Block list of applications by their platform-specific exchange- independent application identifiers.");
     addField("regs", &BidRequest::regs, "Legal regulations");
     addField("ext", &BidRequest::ext, "Extended fields outside of protocol");
     addField("unparseable", &BidRequest::unparseable, "Unparseable fields are collected here");
@@ -61,6 +62,7 @@ DefaultDescription()
 {
     addField("id", &Impression::id, "Impression ID within bid request",
              new StringIdDescription());
+    addField("audio", &Impression::audio, "Audio information if an audio ad")
     addField("native", &Impression::native, "Native information if a native ad");
     addField("banner", &Impression::banner, "Banner information if a banner ad");
     addField("video", &Impression::video, "Video information if a video ad");
@@ -70,6 +72,7 @@ DefaultDescription()
     addField("tagid", &Impression::tagid, "Add tag ID for auction");
     addField("bidfloor", &Impression::bidfloor, "Bid floor in CPM of currency");
     addField("bidfloorcur", &Impression::bidfloorcur, "Currency for bid floor");
+    addField("clickbrowser", &Impression::clickbrowser, "Indicates the type of browser opened upon clicking the creative in an app, where 0 = embedded, 1 = native.");
     addField("secure", &Impression::secure, "Does the impression require https");
     addField("iframebuster", &Impression::iframebuster, "Supported iframe busters");
     addField("pmp", &Impression::pmp, "Contains any deals eligible for the impression");
@@ -85,8 +88,13 @@ DefaultDescription()
     addField("title", &Content::title, "Title of the content");
     addField("series", &Content::series, "Series to which the content belongs");
     addField("season", &Content::season, "Season to which the content belongs");
+    addField("artist", &Content::artist, "Artist credited with the content.");
+    addField("genre", &Content::genre, "Genre that best describes the content (e.g., rock, pop, etc).");
+    addField("album", &Content::album, "Album to which the content belongs; typically for audio.");
+    addField("isrc", &Content::isrc, "International Standard Recording Code conforming to ISO- 3901.");
     addField("url", &Content::url, "URL of the content's original location");
     addField("cat", &Content::cat, "IAB content categories of the content");
+    addField("prodq", &Content::prodq, "Production quality.");
     addField("videoquality", &Content::videoquality, "Quality of the video");
     ValueDescriptionT<CSList> * kwdesc = new Utf8CommaSeparatedListDescription();
     addField("keywords", &Content::keywords, "Keywords describing the keywords", kwdesc);
@@ -99,6 +107,7 @@ DefaultDescription()
     addField("len", &Content::len, "Content length in seconds");
     addField("qagmediarating", &Content::qagmediarating, "Media rating per QAG guidelines");
     addField("embeddable", &Content::embeddable, "1 if embeddable, 0 otherwise");
+    addField("data", &Content::data, "Additional content data.");
     addField("language", &Content::language, "ISO 639-1 Content language");
     addField("ext", &Content::ext, "Extensions to the protocol go here");
 }
@@ -218,13 +227,16 @@ DefaultDescription()
 {
     addField("lat", &Geo::lat, "Latiture of user in degrees from equator");
     addField("lon", &Geo::lon, "Longtitude of user in degrees (-180 to 180)");
+    addField("type", &Geo::type, "Source of location data");
+    addField("accuracy", &Geo::accuracy, "Estimated location accuracy in meters.");
+    addField("lastfix", &Geo::lastfix, "Number of seconds since this geolocation fix was established.");
+    addField("ipservice", &Geo::ipservice, "Service or provider used to determine geolocation from IP address if applicable.");
     addField("country", &Geo::country, "ISO 3166-1 country code");
     addField("region", &Geo::region, "ISO 3166-2 Region code");
     addField("regionfips104", &Geo::regionfips104, "FIPS 10-4 region code");
     addField("metro", &Geo::metro, "Metropolitan region (Google Metro code");
     addField("city", &Geo::city, "City name (UN Code for Trade and Transport)");
     addField("zip", &Geo::zip, "Zip or postal code");
-    addField("type", &Geo::type, "Source of location data");
     addField("utcoffset", &Geo::utcoffset, "UTC offset");
     addField("ext", &Geo::ext, "Extensions to the protocol go here");
     /// Datacratic extension
@@ -260,6 +272,8 @@ DefaultDescription()
     addField("ppi", &Device::ppi, "Screen size as pixels per linear inch.");
     addField("pxratio", &Device::pxratio, "The ratio of physical pixels to device independent pixels");
     addField("js", &Device::js, "Javascript is supported");
+    addField("geofetch", &Device::geofetch, "Indicates if the geolocation API will be available to JavaScript\n"
+            "code running in the banner, where 0 = no, 1 = yes.");
     addField("connectiontype", &Device::connectiontype, "Device connection type");
     addField("devicetype", &Device::devicetype, "Device type");
     addField("flashver", &Device::flashver, "Flash version on device");
@@ -330,9 +344,13 @@ DefaultDescription()
              new StringIdDescription());
     addField("cat", &Bid::cat, "category");
     addField("attr", &Bid::attr, "Creative attributes");
+    addField("api", &Bid::api, "API required by the markup if applicable.");
+    addField("protocol", &Bid::protocol, "Video response protocol of the markup if applicable.");
+    addField("qagmediarating", &Bid::qagmediarating, "Creative media rating per IQG guidelines");
     addField("dealid", &Bid::dealid, "Deal Id for PMP Auction");
     addField("w", &Bid::w, "width of ad in pixels");
     addField("h", &Bid::h, "height of ad in pixels");
+    addField("exp", &Bid::exp, "Advisory as to the number of seconds the bidder is willing to wait between the auction and the actual impression.");
     addField("ext", &Bid::ext, "Extensions");
 }
 

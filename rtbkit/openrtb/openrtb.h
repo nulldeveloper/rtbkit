@@ -59,7 +59,7 @@ struct MimeType {
 /* CONTENT CATEGORIES                                                        */
 /*****************************************************************************/
 
-/** 6.1 Content Categories
+/** 5.1 Content Categories
 
     The following list represents the IAB’s contextual taxonomy for
     categorization.  Standard IDs have been adopted to easily support the
@@ -101,7 +101,7 @@ struct ContentCategory {
 /* BANNER AD TYPES                                                           */
 /*****************************************************************************/
 
-/** 6.2 Banner Ad Types
+/** 5.2 Banner Ad Types
 
     The following table indicates the types of ads that can be accepted by the
     exchange unless restricted by publisher site settings.
@@ -122,7 +122,7 @@ struct BannerAdType: public Datacratic::TaggedEnum<BannerAdType> {
 /* CREATIVE ATTRIBUTES                                                       */
 /*****************************************************************************/
 
-/** 6.3 Creative Attributes
+/** 5.3 Creative Attributes
 
     The following table specifies a standard list of creative attributes that
     can describe an ad being served or serve as restrictions of thereof.
@@ -147,29 +147,8 @@ struct CreativeAttribute: public Datacratic::TaggedEnum<CreativeAttribute> {
         USER_INTERACTIVE = 13,
         WINDOWS_DIALOG_OR_ALERT_STYLE = 14,
         HAS_AUDIO_ON_OFF_BUTTON = 15,
-        AD_CAN_BE_SKIPPED = 16
-    };
-};
-
-
-/*****************************************************************************/
-/* API FRAMEWORKS                                                            */
-/*****************************************************************************/
-
-/** 6.4 API Frameworks
-
-    This is a list of API frameworks.
-*/
-
-struct ApiFramework: public Datacratic::TaggedEnum<ApiFramework> {
-    enum Vals {
-        UNSPECIFIED = -1,  ///< Not explicitly specified
-
-        VPAID_1 = 1,    ///< IAB Video Player-Ad Interface Definitions V1
-        VPAID_2 = 2,    ///< IAB Video Player-Ad Interface Definitions V2
-        MRAID = 3,      ///< IAB Mobile Rich Media Ad Interface Definitions
-        ORMMA = 4,       ///< Google Open Rich Media Mobile Advertising
-        MRAID2 = 5      ///< IAB Mobile Rich Media Ad Interface Definitions V2
+        AD_CAN_BE_SKIPPED = 16,
+        ADOBEFLASH = 17
     };
 };
 
@@ -178,7 +157,7 @@ struct ApiFramework: public Datacratic::TaggedEnum<ApiFramework> {
 /* AD POSITION                                                               */
 /*****************************************************************************/
 
-/** 6.5 Ad Position
+/** 5.4 Ad Position
 
     The following table specifies the position of the ad as a relative
     measure of visibility or prominence.
@@ -204,11 +183,58 @@ struct AdPosition: public Datacratic::TaggedEnum<AdPosition, 0> {
 };
 
 
+
+/*****************************************************************************/
+/* EXPANDABLE DIRECTION                                                      */
+/*****************************************************************************/
+
+/** 5.5 Expandable Direction
+
+    The following table lists the directions in which an expandable ad may
+    expand, given the positioning of the ad unit on the page and constraints
+    imposed by the content.
+*/
+
+struct ExpandableDirection: public Datacratic::TaggedEnum<ExpandableDirection> {
+    enum Vals {
+        UNSPECIFIED = -1,  ///< Not explicitly specified
+
+        LEFT = 1,
+        RIGHT = 2,
+        UP = 3,
+        DOWN = 4,
+        FULLSCREEN = 5
+    };
+};
+
+
+
+/*****************************************************************************/
+/* API FRAMEWORKS                                                            */
+/*****************************************************************************/
+
+/** 5.6 API Frameworks
+
+    This is a list of API frameworks.
+*/
+
+struct ApiFramework: public Datacratic::TaggedEnum<ApiFramework> {
+   enum Vals {
+       UNSPECIFIED = -1,  ///< Not explicitly specified
+
+       VPAID_1 = 1,    ///< IAB Video Player-Ad Interface Definitions V1
+       VPAID_2 = 2,    ///< IAB Video Player-Ad Interface Definitions V2
+       MRAID = 3,      ///< IAB Mobile Rich Media Ad Interface Definitions
+       ORMMA = 4,       ///< Google Open Rich Media Mobile Advertising
+       MRAID2 = 5      ///< IAB Mobile Rich Media Ad Interface Definitions V2
+   };
+};
+
 /*****************************************************************************/
 /* VIDEO LINEARITY                                                           */
 /*****************************************************************************/
 
-/** 6.6 Video Linearity
+/** 5.7 Video Linearity
 
     The following table indicates the options for video linearity.
     "In-stream" or "linear" video refers to pre-roll, post-roll, or mid-roll
@@ -234,7 +260,7 @@ struct VideoLinearity: public Datacratic::TaggedEnum<VideoLinearity> {
 /* VIDEO BID RESPONSE PROTOCOLS                                              */
 /*****************************************************************************/
 
-/** 6.7 Video Bid Response Protocols
+/** 5.8 Video Bid Response Protocols
 
     The following table lists the options for video bid response protocols
     that could be supported by an exchange.
@@ -249,7 +275,9 @@ struct VideoBidResponseProtocol: public Datacratic::TaggedEnum<VideoBidResponseP
         VAST3 = 3,
         VAST1_WRAPPER = 4,
         VAST2_WRAPPER = 5,
-        VAST3_WRAPPER = 6
+        VAST3_WRAPPER = 6,
+        VAST4 = 7,
+        DAST1 = 8
     };
 };
 
@@ -257,7 +285,7 @@ struct VideoBidResponseProtocol: public Datacratic::TaggedEnum<VideoBidResponseP
 /* VIDEO PLAYBACK METHODS                                                    */
 /*****************************************************************************/
 
-/** 6.8 Video Playback Methods
+/** 5.9 Video Playback Methods
 
  */
 
@@ -277,7 +305,7 @@ struct VideoPlaybackMethod: public Datacratic::TaggedEnum<VideoPlaybackMethod> {
 /* VIDEO START DELAY                                                         */
 /*****************************************************************************/
 
-/** 6.9 Video Start Delay
+/** 5.10 Video Start Delay
 
     The following table lists the various options for the video start delay.
     If the start delay value is greater than 0 then the position is mid-roll,
@@ -299,49 +327,45 @@ struct VideoStartDelay: public Datacratic::TaggedEnum<VideoStartDelay> {
 
 
 /*****************************************************************************/
-/* CONNECTION TYPE                                                           */
+/* VIDEO QUALITY                                                             */
 /*****************************************************************************/
 
-/** 6.10 Connection Type
+/** 5.11 Video Quality
 
-    The following table lists the various options for the connection type.
+    The following table lists the options for the video quality (as defined by
+    the IAB – http://www.iab.net/media/file/long-form-video-final.pdf).
 */
 
-struct ConnectionType: public Datacratic::TaggedEnum<ConnectionType> {
+struct VideoQuality: public Datacratic::TaggedEnum<VideoQuality> {
     enum Vals {
         UNSPECIFIED = -1,  ///< Not explicitly specified
 
         UNKNOWN = 0,
-        ETHERNET = 1,
-        WIFI = 2,
-        CELLULAR_UNKNOWN = 3,
-        CELLULAR_2G = 4,
-        CELLULAR_3G = 5,
-        CELLULAR_4G = 6
+        PROFESSIONAL = 1,
+        PROSUMER = 2,
+        USER_GENERATED = 3
     };
 };
 
 
 /*****************************************************************************/
-/* EXPANDABLE DIRECTION                                                      */
+/* VAST COMPANION TYPES                                                      */
 /*****************************************************************************/
 
-/** 6.11 Expandable Direction
+/** 5.12 VAST Companion Types
 
-    The following table lists the directions in which an expandable ad may
-    expand, given the positioning of the ad unit on the page and constraints
-    imposed by the content.
+    The following table lists the options to indicate markup types allowed
+    for video companion ads.  This table is derived from IAB VAST 2.0+.  See
+    www.iab.net/vast/ for more information.
 */
 
-struct ExpandableDirection: public Datacratic::TaggedEnum<ExpandableDirection> {
+struct VastCompanionType: public Datacratic::TaggedEnum<VastCompanionType> {
     enum Vals {
         UNSPECIFIED = -1,  ///< Not explicitly specified
 
-        LEFT = 1,
-        RIGHT = 2,
-        UP = 3,
-        DOWN = 4,
-        FULLSCREEN = 5
+        STATIC_RESOURCE = 1,
+        HTML_RESOURCE = 2,
+        IFRAME_RESOURCE = 3
     };
 };
 
@@ -350,7 +374,7 @@ struct ExpandableDirection: public Datacratic::TaggedEnum<ExpandableDirection> {
 /* CONTENT DELIVERY METHOD                                                   */
 /*****************************************************************************/
 
-/** 6.12 Content Delivery Methods
+/** 5.13 Content Delivery Methods
 
     The following table lists the various options for the delivery of video
     content.
@@ -367,10 +391,52 @@ struct ContentDeliveryMethod: public Datacratic::TaggedEnum<ContentDeliveryMetho
 
 
 /*****************************************************************************/
+/* Feed Types                                                                */
+/*****************************************************************************/
+
+/** 5.14 Feed Types
+
+    The following table lists the options for the audio feed types.
+*/
+
+struct FeedTypes: public Datacratic::TaggedEnum<FeedTypes> {
+    enum Vals {
+        UNSPECIFIED = -1,  ///< Not explicitly specified
+
+        SINGLEFEED = 1,
+        MULTIPLEFEED = 2,
+        FMAMBROADCAST = 3,
+        PODCAST = 4
+    };
+};
+
+
+/*****************************************************************************/
+/* Volume Normalization Modes                                                */
+/*****************************************************************************/
+
+/** 5.15 Volume Normalization Modes
+
+    The following table lists the options for the audio feed types.
+*/
+
+struct VolumeNormalizationModes: public Datacratic::TaggedEnum<VolumeNormalizationModes> {
+    enum Vals {
+        UNSPECIFIED = -1,  ///< Not explicitly specified
+
+        NONE = 0,
+        AVERAGE = 1,
+        PEAK = 2,
+        CUSTOM = 3
+    };
+};
+
+
+/*****************************************************************************/
 /* CONTENT CONTEXT                                                           */
 /*****************************************************************************/
 
-/** 6.13 Content Context
+/** 5.16 Content Context
 
     The following table lists the various options for the content context;
     what type of content is it.  Note to the reader: This OpenRTB table has
@@ -390,37 +456,35 @@ struct ContentContext: public Datacratic::TaggedEnum<ContentContext> {
         TEXT = 5,
         OTHER = 6,
         UNKNOWN = 7
-    };
+     };
 };
 
 
 /*****************************************************************************/
-/* VIDEO QUALITY                                                             */
+/* QAG MEDIA RATINGS                                                         */
 /*****************************************************************************/
 
-/** 6.14 Video Quality
+/** 5.17 QAG Media Ratings
 
-    The following table lists the options for the video quality (as defined by
-    the IAB – http://www.iab.net/media/file/long-form-video-final.pdf).
+    The following table lists the media ratings using the QAG categorization.
+    See http://www.iab.net/ne_guidelines for more information.
 */
 
-struct VideoQuality: public Datacratic::TaggedEnum<VideoQuality> {
+struct MediaRating: public Datacratic::TaggedEnum<MediaRating> {
     enum Vals {
         UNSPECIFIED = -1,  ///< Not explicitly specified
 
-        UNKNOWN = 0,
-        PROFESSIONAL = 1,
-        PROSUMER = 2,
-        USER_GENERATED = 3
+        ALL_AUDIENCES = 1,
+        OVER_12 = 2,
+        MATURE_AUDIENCES =3
     };
 };
-
 
 /*****************************************************************************/
 /* LOCATION TYPE                                                             */
 /*****************************************************************************/
 
-/** 6.15 Location Type
+/** 5.18 Location Type
 
     The following table lists the options to indicate how the geographic
     information was determined.
@@ -441,7 +505,7 @@ struct LocationType: public Datacratic::TaggedEnum<LocationType> {
 /* DEVICE TYPE                                                               */
 /*****************************************************************************/
 
-/** 6.16 Device Type
+/** 5.19 Device Type
 
     The following table lists the options to indicate how the geographic
     information was determined.   Note to the reader: This OpenRTB table has
@@ -466,52 +530,54 @@ struct DeviceType: public Datacratic::TaggedEnum<DeviceType> {
 
 
 /*****************************************************************************/
-/* VAST COMPANION TYPES                                                      */
+/* CONNECTION TYPE                                                           */
 /*****************************************************************************/
 
-/** 6.17 VAST Companion Types
+/** 5.20 Connection Type
 
-    The following table lists the options to indicate markup types allowed
-    for video companion ads.  This table is derived from IAB VAST 2.0+.  See
-    www.iab.net/vast/ for more information.
+    The following table lists the various options for the connection type.
 */
 
-struct VastCompanionType: public Datacratic::TaggedEnum<VastCompanionType> {
+struct ConnectionType: public Datacratic::TaggedEnum<ConnectionType> {
     enum Vals {
         UNSPECIFIED = -1,  ///< Not explicitly specified
 
-        STATIC_RESOURCE = 1,
-        HTML_RESOURCE = 2,
-        IFRAME_RESOURCE = 3
+        UNKNOWN = 0,
+        ETHERNET = 1,
+        WIFI = 2,
+        CELLULAR_UNKNOWN = 3,
+        CELLULAR_2G = 4,
+        CELLULAR_3G = 5,
+        CELLULAR_4G = 6
     };
 };
 
 
 /*****************************************************************************/
-/* QAG MEDIA RATINGS                                                         */
+/* IP LOCATION SERVICES                                                      */
 /*****************************************************************************/
 
-/** 6.18 QAG Media Ratings
+/** 5.21 IP Location Services
 
-    The following table lists the media ratings using the QAG categorization.
-    See http://www.iab.net/ne_guidelines for more information.
+    The following table lists the various options for the connection type.
 */
 
-struct MediaRating: public Datacratic::TaggedEnum<MediaRating> {
+struct IPLocationService: public Datacratic::TaggedEnum<IPLocationService> {
     enum Vals {
         UNSPECIFIED = -1,  ///< Not explicitly specified
 
-        ALL_AUDIENCES = 1,
-        OVER_12 = 2,
-        MATURE_AUDIENCES =3 
+        IP2LOCATION = 1,
+        NEUSTAR = 2,
+        MAXMIND = 3
     };
 };
+
 
 /*****************************************************************************/
 /* No-Bid Reason Codes                                                       */
 /*****************************************************************************/
 
-/** 6.19 No-Bid Reason Codes
+/** 5.22 No-Bid Reason Codes
 
     The following table lists the options to signal the exchange why the impression
     was not bid on.
@@ -672,10 +738,50 @@ struct Video {
 };
 
 /*****************************************************************************/
+/* Audio                                                                     */
+/*****************************************************************************/
+
+/** 3.2.5 Audio Object
+
+    The “video” object must be included directly in the impression object if
+    the impression offered for auction is an in-stream video ad opportunity.
+
+    Note that for the video object, many of the fields are non-essential for
+    a minimally viable exchange interfaces.  These parameters do not
+    necessarily need to be specified to the bidder, if they are always the
+    same for all impression, of if the exchange chooses not to supply the
+    additional information to the bidder.
+*/
+
+struct Audio {
+    ~Audio();
+    std::vector<Datacratic::UnicodeString> mimes;
+    Datacratic::TaggedInt minduration;
+    Datacratic::TaggedInt maxduration;
+    Datacratic::List<VideoBidResponseProtocol> protocols;
+    Datacratic::TaggedInt startdelay;
+    Datacratic::TaggedInt sequence;
+    Datacratic::List<CreativeAttribute> battr;
+    Datacratic::TaggedInt maxextended;
+    Datacratic::TaggedInt minbitrate;
+    Datacratic::TaggedInt maxbitrate;
+    Datacratic::List<ContentDeliveryMethod> delivery;
+    Datacratic::List<Banner> companionad;
+    Datacratic::List<ApiFramework> api;
+    Datacratic::List<VastCompanionType> companiontype;
+    Datacratic::TaggedInt maxseq;
+    FeedTypes feed;
+    Datacratic::TaggedInt stitched;
+    Datacratic::TaggedInt nvol;
+    Datacratic::TaggedInt dl;
+    Json::Value ext;
+};
+
+/*****************************************************************************/
 /* Native                                                                    */
 /*****************************************************************************/
 
-/** 3.2.5 Native Object
+/** 3.2.6 Native Object
 
     The “video” object must be included directly in the impression object if
     the impression offered for auction is an in-stream video ad opportunity.
@@ -699,7 +805,7 @@ struct Native {
 /* PRODUCER / PUBLISHER                                                      */
 /*****************************************************************************/
 
-/** 3.2.8 Publisher Object
+/** 3.2.10 Publisher Object
 
     The publisher object itself and all of its parameters are optional, so
     default values are not provided.  If an optional parameter is not
@@ -715,7 +821,7 @@ struct Publisher {
     Json::Value ext;             ///< Extensions go here, new in OpenRTB 2.1
 };
 
-/** 3.2.10 Producer Object
+/** 3.2.12 Producer Object
 
     The producer is useful when content where the ad is shown is syndicated,
     and may appear on a completely different publisher.  The producer object
@@ -727,11 +833,29 @@ struct Publisher {
 
 typedef Publisher Producer;  /// They are the same...
 
+
+/*****************************************************************************/
+/* PMP                                                                       */
+/*****************************************************************************/
+
+/** 3.2.19 PMP object
+
+    The “pmp” object contains a parent object for usage within the context of private marketplaces 
+    and the use of the RTB protocol to execute Direct Deals.
+ 
+*/
+struct PMP { // New in OpenRTB 2.2
+    ~PMP();
+    Datacratic::TaggedIntDef<0> privateAuction;    ///< Flag for private auction traffic : = 0 all bids, 1 = private deal
+    std::vector<Deal> deals;   ///< List of deals eligible for this impression
+    Json::Value ext;                ///< Extensions related to private deals between parties 
+};
+
 /*****************************************************************************/
 /* DEAL                                                                      */
 /*****************************************************************************/
 
-/** 3.2.18 Direct deals object
+/** 3.2.20 Direct deals object
 
     A "deal" object constitutes a deal struck a priori between a buyer and a seller and indicates that
     this impression is available under the terms of that deal.
@@ -747,23 +871,6 @@ struct Deal { // New in OpenRTB 2.2
     Json::Value ext;                        ///< Extension object
 };
 
-
-/*****************************************************************************/
-/* PMP                                                                       */
-/*****************************************************************************/
-
-/** 3.2.17 PMP object
-
-    The “pmp” object contains a parent object for usage within the context of private marketplaces 
-    and the use of the RTB protocol to execute Direct Deals.
- 
-*/
-struct PMP { // New in OpenRTB 2.2
-    ~PMP();
-    Datacratic::TaggedIntDef<0> privateAuction;    ///< Flag for private auction traffic : = 0 all bids, 1 = private deal
-    std::vector<Deal> deals;   ///< List of deals eligible for this impression
-    Json::Value ext;                ///< Extensions related to private deals between parties 
-};
 
 /*****************************************************************************/
 /* IMPRESSION                                                                */
@@ -782,6 +889,7 @@ struct PMP { // New in OpenRTB 2.2
 struct Impression {
     ~Impression();
     Datacratic::Id id;                             ///< Impression ID within BR
+    Datacratic::Optional<Audio> audio;
     Datacratic::Optional<Native> native;
     Datacratic::Optional<Banner> banner;           ///< If it's a banner ad
     Datacratic::Optional<Video> video;             ///< If it's a video ad
@@ -791,9 +899,11 @@ struct Impression {
     Datacratic::UnicodeString tagid;                   ///< ad tag ID for auction
     Datacratic::TaggedDoubleDef<0> bidfloor;        ///< CPM bid floor
     std::string bidfloorcur;                ///< Bid floor currency
+    Datacratic::TaggedInt clickbrowser;  ///< Indicates the type of browser opened upon clicking the creative in an app, where 0 = embedded, 1 = native.
     Datacratic::TaggedInt secure;           ///< Flag that requires secure https assets (1 == yes) (OpenRTB 2.2)
     Datacratic::List<std::string> iframebuster;         ///< Supported iframe busters (for expandable/video ads)
     Datacratic::Optional<OpenRTB::PMP> pmp;        ///< Containing any Deals eligible for the impression object
+    Datacratic::TaggedInt exp;      ///< Advisory as to the number of seconds that may elapse between the auction and the actual impression.
     Json::Value ext;                   ///< Extended impression attributes
 };
 
@@ -802,7 +912,7 @@ struct Impression {
 /* CONTENT                                                                   */
 /*****************************************************************************/
 
-/** 3.2.9 Content Object
+/** 3.2.11 Content Object
 
     The content object itself and all of its parameters are optional, so
     default values are not provided. If an optional parameter is not specified,
@@ -825,8 +935,13 @@ struct Content {
     Datacratic::UnicodeString title;        ///< Content title
     Datacratic::UnicodeString series;       ///< Content series
     Datacratic::UnicodeString season;       ///< Content season
+    Datacratic::UnicodeString artist;
+    Datacratic::UnicodeString genre;
+    Datacratic::UnicodeString album;
+    Datacratic::UnicodeString isrc;
     Datacratic::Url url;                 ///< Original content URL
     Datacratic::List<ContentCategory> cat; ///< IAB content category (table 6.1)
+    Datacratic::TaggedInt prodq;
     VideoQuality videoquality; ///< Video quality (table 6.14)
     Datacratic::CSList keywords;         ///< Content keywords
     Datacratic::UnicodeString contentrating;    ///< Content rating (eg Mature)
@@ -837,8 +952,9 @@ struct Content {
     Datacratic::Optional<Producer> producer;  ///< Content producer
     Datacratic::TaggedInt len;           ///< Length of content in seconds
     MediaRating qagmediarating;///< Media rating per QAG guidelines (table 6.18).
-    Embeddable embeddable;   ///< 1 if embeddable, 0 otherwise
     std::string language;     ///< Content language.  ISO 639-1 (alpha-2).
+    Embeddable embeddable;   ///< 1 if embeddable, 0 otherwise
+    std::vector<Data> data;
     Json::Value ext;         ///< Extensions go here, new in OpenRTB 2.1
 };
 
@@ -895,7 +1011,7 @@ struct Site: public Context, public SiteInfo {
 /* APP                                                                       */
 /*****************************************************************************/
 
-/** 3.2.7 App Object
+/** 3.2.9 App Object
 
     An “app” object should be included if the ad supported content is part of
     a mobile application (as opposed to a mobile website).  A bid request
@@ -918,49 +1034,10 @@ struct App: public Context, public AppInfo {
 
 
 /*****************************************************************************/
-/* GEO                                                                       */
-/*****************************************************************************/
-
-/** 3.2.12 Geo Object
-
-    The geo object itself and all of its parameters are optional, so default
-    values are not provided. If an optional parameter is not specified, it
-    should be considered unknown.
-
-    Note that the Geo Object may appear in one or both the Device Object and
-    the User Object.  This is intentional, since the information may be
-    derived from either a device-oriented source (such as IP geo lookup), or
-    by user registration information (for example provided to a publisher
-    through a user registration). If the information is in conflict, it’s up
-    to the bidder to determine which information to use.
-*/
-
-struct Geo {
-    ~Geo();
-    Datacratic::TaggedDouble lat;        ///< Latitude of user (-90 to 90; South negative)
-    Datacratic::TaggedDouble lon;        ///< Longtitude (-180 to 180; west is negative)
-    std::string country;         ///< Country code (ISO 3166-1 Alpha-3)
-    std::string region;          ///< Region code (ISO 3166-2)
-    std::string regionfips104;   ///< Region using FIPS 10-4
-    std::string metro;           ///< Metropolitan region (Google Metro code)
-    Datacratic::UnicodeString city;        ///< City name (UN Code for Trade and Transport Loc)
-    Datacratic::UnicodeString zip;             ///< Zip or postal code
-    LocationType type;      ///< Source of Geo data (table 6.15)
-    Datacratic::TaggedInt utcoffset;
-    Json::Value ext;        ///< Extensions go here, new in OpenRTB 2.1
-
-    /// Datacratic extensions
-    std::string dma;             ///< Direct Marketing Association code
-    /// Rubicon extensions
-    Datacratic::TaggedBool latlonconsent;  ///< Has user given consent for lat/lon use?
-};
-
-
-/*****************************************************************************/
 /* DEVICE                                                                    */
 /*****************************************************************************/
 
-/** 3.2.11 Device Object
+/** 3.2.13 Device Object
 
     The “device” object provides information pertaining to the device
     including its hardware, platform, location, and carrier.
@@ -999,14 +1076,13 @@ struct Device {
     Datacratic::UnicodeString model;      ///< Device model
     Datacratic::UnicodeString os;         ///< Device OS
     Datacratic::UnicodeString osv;         ///< Device OS version
-
     Datacratic::UnicodeString hwv;
     Datacratic::TaggedInt h;
     Datacratic::TaggedInt w;
     Datacratic::TaggedInt ppi;
     Datacratic::TaggedDoubleDef<0> pxratio;
-
     Datacratic::TaggedBool js;         ///< Javascript is supported? 1 or 0
+    Datacratic::TaggedInt geofetch;
     ConnectionType connectiontype;    ///< Connection type (table 6.10)
     DeviceType devicetype; ///< Device type (table 6.16)
     std::string flashver;   ///< Flash on device
@@ -1016,28 +1092,82 @@ struct Device {
 
 
 /*****************************************************************************/
-/* SEGMENT                                                                   */
+/* GEO                                                                       */
 /*****************************************************************************/
 
-/** 3.2.15 Segment Object
+/** 3.2.14 Geo Object
 
-    The data and segment objects together allow data about the user to be
-    passed to bidders in the bid request.  Segment objects convey specific
-    units of information from the provider identified in the parent data
-    object.
+    The geo object itself and all of its parameters are optional, so default
+    values are not provided. If an optional parameter is not specified, it
+    should be considered unknown.
 
-    The segment object itself and all of its parameters are optional, so
-    default values are not provided; if an optional parameter is not
-    specified, it should be considered unknown.
+    Note that the Geo Object may appear in one or both the Device Object and
+    the User Object.  This is intentional, since the information may be
+    derived from either a device-oriented source (such as IP geo lookup), or
+    by user registration information (for example provided to a publisher
+    through a user registration). If the information is in conflict, it’s up
+    to the bidder to determine which information to use.
 */
-struct Segment {
-    Datacratic::Id id;                         ///< Segment ID
-    Datacratic::UnicodeString name;                   ///< Segment name
-    Datacratic::UnicodeString value;                  ///< Segment value
-    Json::Value ext;               ///< Extensions go here, new in OpenRTB 2.1
 
-    /// Datacratic Extensions
-    Datacratic::TaggedDouble segmentusecost;    ///< Cost of using segment in CPM
+struct Geo {
+    ~Geo();
+    Datacratic::TaggedDouble lat;        ///< Latitude of user (-90 to 90; South negative)
+    Datacratic::TaggedDouble lon;        ///< Longtitude (-180 to 180; west is negative)
+    LocationType type;      ///< Source of Geo data (table 6.15)
+    Datacratic::TaggedInt accuracy;
+    Datacratic::TaggedInt lastfix;
+    Datacratic::TaggedInt ipservice;
+    std::string country;         ///< Country code (ISO 3166-1 Alpha-3)
+    std::string region;          ///< Region code (ISO 3166-2)
+    std::string regionfips104;   ///< Region using FIPS 10-4
+    std::string metro;           ///< Metropolitan region (Google Metro code)
+    Datacratic::UnicodeString city;        ///< City name (UN Code for Trade and Transport Loc)
+    Datacratic::UnicodeString zip;             ///< Zip or postal code
+    Datacratic::TaggedInt utcoffset;
+    Json::Value ext;        ///< Extensions go here, new in OpenRTB 2.1
+
+    /// Datacratic extensions
+    std::string dma;             ///< Direct Marketing Association code
+    /// Rubicon extensions
+    Datacratic::TaggedBool latlonconsent;  ///< Has user given consent for lat/lon use?
+};
+
+
+/*****************************************************************************/
+/* USER                                                                      */
+/*****************************************************************************/
+
+/** 3.2.15 User Object
+
+    The “user” object contains information known or derived about the
+    human user of the device.  Note that the user ID is an exchange
+    artifact (refer to the “device” object for hardware or platform
+    derived IDs) and may be subject to rotation policies. However, this
+    user ID must be stable long enough to serve reasonably as the basis
+    for frequency capping.
+
+    The user object itself and all of its parameters are optional, so
+    default values are not provided.  If an optional parameter is not
+    specified, it should be considered unknown.
+
+    If device ID is used as a proxy for unique user ID, use the device
+    object.
+*/
+struct User {
+    ~User();
+    Datacratic::Id id;                     ///< Exchange-specific user ID
+    Datacratic::Id buyeruid;               ///< Exchange seat-specific user ID
+    Datacratic::TaggedInt yob;             ///< Year of birth
+    std::string gender;             ///< Gender: Male, Female, Other
+    Datacratic::CSList keywords;           ///< List of keywords of consumer intent
+    Datacratic::UnicodeString customdata;         ///< Custom data from exchange
+    Datacratic::Optional<Geo> geo;                   ///< Geolocation of user at registration
+    std::vector<Data> data;         ///< User data segments
+    Json::Value ext;           ///< Extensions go here, new in OpenRTB 2.1
+
+    /// Rubicon extensions
+    Datacratic::TaggedInt tz;              ///< User time zone in seconds after GMT
+    Datacratic::TaggedInt sessiondepth;    ///< User session depth
 };
 
 
@@ -1045,7 +1175,7 @@ struct Segment {
 /* DATA                                                                      */
 /*****************************************************************************/
 
-/** 3.2.14 Data Object
+/** 3.2.16 Data Object
 
     The data and segment objects together allow data about the user to be
     passed to bidders in the bid request.  This data may be from multiple
@@ -1070,47 +1200,36 @@ struct Data {
 
 
 /*****************************************************************************/
-/* USER                                                                      */
+/* SEGMENT                                                                   */
 /*****************************************************************************/
 
-/** 3.2.13 User Object
+/** 3.2.17 Segment Object
 
-    The “user” object contains information known or derived about the
-    human user of the device.  Note that the user ID is an exchange
-    artifact (refer to the “device” object for hardware or platform
-    derived IDs) and may be subject to rotation policies. However, this
-    user ID must be stable long enough to serve reasonably as the basis
-    for frequency capping.
-
-    The user object itself and all of its parameters are optional, so
-    default values are not provided.  If an optional parameter is not
-    specified, it should be considered unknown.
-    
-    If device ID is used as a proxy for unique user ID, use the device
+    The data and segment objects together allow data about the user to be
+    passed to bidders in the bid request.  Segment objects convey specific
+    units of information from the provider identified in the parent data
     object.
-*/
-struct User {
-    ~User();
-    Datacratic::Id id;                     ///< Exchange-specific user ID
-    Datacratic::Id buyeruid;               ///< Exchange seat-specific user ID
-    Datacratic::TaggedInt yob;             ///< Year of birth
-    std::string gender;             ///< Gender: Male, Female, Other
-    Datacratic::CSList keywords;           ///< List of keywords of consumer intent
-    Datacratic::UnicodeString customdata;         ///< Custom data from exchange
-    Datacratic::Optional<Geo> geo;                   ///< Geolocation of user at registration
-    std::vector<Data> data;         ///< User data segments
-    Json::Value ext;           ///< Extensions go here, new in OpenRTB 2.1
 
-    /// Rubicon extensions
-    Datacratic::TaggedInt tz;              ///< User time zone in seconds after GMT
-    Datacratic::TaggedInt sessiondepth;    ///< User session depth
+    The segment object itself and all of its parameters are optional, so
+    default values are not provided; if an optional parameter is not
+    specified, it should be considered unknown.
+*/
+struct Segment {
+    Datacratic::Id id;                         ///< Segment ID
+    Datacratic::UnicodeString name;                   ///< Segment name
+    Datacratic::UnicodeString value;                  ///< Segment value
+    Json::Value ext;               ///< Extensions go here, new in OpenRTB 2.1
+
+    /// Datacratic Extensions
+    Datacratic::TaggedDouble segmentusecost;    ///< Cost of using segment in CPM
 };
+
 
 /*****************************************************************************/
 /* REGULATIONS                                                               */
 /*****************************************************************************/
 
-/** 3.2.16 Regulations object
+/** 3.2.18 Regulations object
   
     The “regs” object contains any legal, governmental, or industry regulations that apply to the 
     request. The first regulation added signal whether or not the request falls under the United States 
@@ -1162,6 +1281,7 @@ struct BidRequest {
     std::vector<std::string> cur;                ///< Allowable currencies
     Datacratic::List<ContentCategory> bcat;        ///< Blocked advertiser categories (table 6.1)
     std::vector<Datacratic::UnicodeString> badv;           ///< Blocked advertiser domains
+    std::vector<Datacratic::UnicodeString> bapp;
     Datacratic::Optional<Regulations> regs; ///< Regulations Object list (OpenRTB 2.2)
     Json::Value ext;                   ///< Protocol extensions
     Json::Value unparseable;           ///< Unparseable fields get put here
@@ -1209,10 +1329,14 @@ struct Bid {
     Datacratic::Id crid;                      ///< Creative ID
     std::vector<ContentCategory> cat;
     Datacratic::List<CreativeAttribute> attr; ///< Creative attributes
+    ApiFramework api; ///< API required by the markup if applicable.
+    VideoBidResponseProtocol protocol; ///< Video response protocol of the markup if applicable.
+    MediaRating qagmediarating; ///< Creative media rating per IQG guidelines.
     std::string dealid;                     ///< unique id for the deal associated with bid
                                             ///< if its in bid request, required in bid response
     Datacratic::TaggedInt w;                ///< width of ad in pixels
     Datacratic::TaggedInt h;                ///< height of ad in pixels
+    Datacratic::TaggedInt exp;
     Json::Value ext;              ///< Extended bid fields
 };
 
