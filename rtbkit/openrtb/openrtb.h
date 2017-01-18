@@ -31,6 +31,8 @@
 #include "jml/utils/compact_vector.h"
 #include "soa/jsoncpp/value.h"
 #include "soa/types/basic_value_descriptions.h"
+#include "../../soa/types/basic_value_descriptions.h"
+#include "../../soa/types/string.h"
 #include <iostream>
 
 namespace OpenRTB {
@@ -675,7 +677,7 @@ struct AuctionType: public Datacratic::TaggedEnum<AuctionType, 2> {
 */
 struct Banner {
     ~Banner();
-
+//    Datacratic::List<Format> format;
     ///< NOTE: RTBkit extension: support for multiple formats
     Datacratic::List<int> w;                     ///< Width of ad
     Datacratic::List<int> h;                     ///< Height of ad
@@ -805,7 +807,7 @@ struct Native {
 /* PRODUCER / PUBLISHER                                                      */
 /*****************************************************************************/
 
-/** 3.2.10 Publisher Object
+/** 3.2.15 Publisher Object
 
     The publisher object itself and all of its parameters are optional, so
     default values are not provided.  If an optional parameter is not
@@ -873,15 +875,57 @@ struct Deal { // New in OpenRTB 2.2
 
 
 /*****************************************************************************/
+/* Source                                                                    */
+/*****************************************************************************/
+
+/** 3.2.2 Source object
+
+    This object describes the nature and behavior of the entity that is the source of the bid request upstream from the exchange.
+    The primary purpose of this object is to define post-auction or upstream decisioning when the exchange itself does not control the final decision.
+    A common example of this is header bidding, but it can also apply to upstream server entities such as another RTB exchange, a mediation platform, or an ad server combines direct campaigns with 3rd party demand in decisioning.
+
+*/
+struct Source {
+    ~Source();
+    Datacratic::TaggedInt fd;
+    Datacratic::UnicodeString tid;
+    Datacratic::UnicodeString pchain;
+    Json::Value ext;                        ///< Extension object
+};
+
+
+/*****************************************************************************/
+/* REGULATIONS                                                               */
+/*****************************************************************************/
+
+/** 3.2.3 Regulations object
+
+    The “regs” object contains any legal, governmental, or industry regulations that apply to the
+    request. The first regulation added signal whether or not the request falls under the United States
+    Federal Trade Commission’s regulations for the United States Children’s Online Privacy
+    Protection Act (“COPPA”). See the COPPA appendix for details.
+
+    The regs object itself and all of its parameters are optional, so default values are not provided.
+    If an optional parameter is not specified, it should be considered unknown.
+
+*/
+struct Regulations { // New in OpenRTB 2.2
+    ~Regulations();
+    Datacratic::TaggedIntDef<0> coppa;    ///< Flag for coppa regulated traffic : = 0 no, 1 = yes
+    Json::Value ext;                      ///< Extensions related to regulations
+};
+
+
+/*****************************************************************************/
 /* IMPRESSION                                                                */
 /*****************************************************************************/
 
-/** 3.2.2 Impression Object
+/** 3.2.4 Impression Object
 
     The “imp” object describes the ad position or impression being auctioned.
     A single bid request can include multiple “imp” objects, a use case for
     which might be an exchange that supports selling all ad positions on a
-    given page as a bundle.  Each “imp” object has a required ID so that 
+    given page as a bundle.  Each “imp” object has a required ID so that
     bids can reference them individually.  An exchange can also conduct
     private auctions by restricting involvement to specific subsets of seats
     within bidders.
@@ -889,6 +933,7 @@ struct Deal { // New in OpenRTB 2.2
 struct Impression {
     ~Impression();
     Datacratic::Id id;                             ///< Impression ID within BR
+    //metric
     Datacratic::Optional<Audio> audio;
     Datacratic::Optional<Native> native;
     Datacratic::Optional<Banner> banner;           ///< If it's a banner ad
@@ -904,6 +949,28 @@ struct Impression {
     Datacratic::List<std::string> iframebuster;         ///< Supported iframe busters (for expandable/video ads)
     Datacratic::Optional<OpenRTB::PMP> pmp;        ///< Containing any Deals eligible for the impression object
     Datacratic::TaggedInt exp;      ///< Advisory as to the number of seconds that may elapse between the auction and the actual impression.
+    Json::Value ext;                   ///< Extended impression attributes
+};
+
+
+/*****************************************************************************/
+/* Metric                                                                    */
+/*****************************************************************************/
+
+/** 3.2.5 Metric Object
+
+    This object is associated with an impression as an array of metrics.
+    These metrics can offer insight into the impression to assist with
+    decisioning such as average recent viewability, click-through rate,
+    etc. Each metric is identified by its type, reports the value of
+    the metric, and optionally identifies the source or vendor measuring the value.
+
+*/
+struct Metric {
+    ~Metric();
+    Datacratic::UnicodeString type;
+    Datacratic::TaggedFloat value;
+    Datacratic::UnicodeString vendor;
     Json::Value ext;                   ///< Extended impression attributes
 };
 
@@ -1226,27 +1293,6 @@ struct Segment {
 
 
 /*****************************************************************************/
-/* REGULATIONS                                                               */
-/*****************************************************************************/
-
-/** 3.2.18 Regulations object
-  
-    The “regs” object contains any legal, governmental, or industry regulations that apply to the 
-    request. The first regulation added signal whether or not the request falls under the United States 
-    Federal Trade Commission’s regulations for the United States Children’s Online Privacy 
-    Protection Act (“COPPA”). See the COPPA appendix for details.
-    
-    The regs object itself and all of its parameters are optional, so default values are not provided. 
-    If an optional parameter is not specified, it should be considered unknown.
-
-*/
-struct Regulations { // New in OpenRTB 2.2
-    ~Regulations();
-    Datacratic::TaggedIntDef<0> coppa;    ///< Flag for coppa regulated traffic : = 0 no, 1 = yes
-    Json::Value ext;                      ///< Extensions related to regulations 
-};
-
-/*****************************************************************************/
 /* BID REQUEST                                                               */
 /*****************************************************************************/
 
@@ -1277,12 +1323,15 @@ struct BidRequest {
     AuctionType at;                    ///< Auction type (1=first/2=second party)
     Datacratic::TaggedInt tmax;                    ///< Max time avail in ms
     std::vector<std::string> wseat;              ///< Allowed buyer seats
+    //bseat
     Datacratic::TaggedBool allimps;                ///< All impressions in BR (for road-blocking)
     std::vector<std::string> cur;                ///< Allowable currencies
+    //wlang
     Datacratic::List<ContentCategory> bcat;        ///< Blocked advertiser categories (table 6.1)
     std::vector<Datacratic::UnicodeString> badv;           ///< Blocked advertiser domains
     std::vector<Datacratic::UnicodeString> bapp;
     Datacratic::Optional<Regulations> regs; ///< Regulations Object list (OpenRTB 2.2)
+    // source
     Json::Value ext;                   ///< Protocol extensions
     Json::Value unparseable;           ///< Unparseable fields get put here
 };
