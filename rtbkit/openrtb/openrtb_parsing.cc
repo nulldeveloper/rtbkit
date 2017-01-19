@@ -404,5 +404,37 @@ DefaultDescription()
     addField("ext", &Regulations::ext, "Extensions");
 }
 
+DefaultDescription<OpenRTB::Format>::
+DefaultDescription()
+{
+    addField("w", &Format::w, "Width");
+    addField("h", &Format::h, "Height");
+    addField("ext", &Format::ext, "Extensions");
+}
+
+DefaultDescription<OpenRTB::Audio>::
+DefaultDescription()
+{
+    addField("mimes", &Audio::mimes, "Content MIME types supported.");
+    addField("minduration", &Audio::minduration, "Minimum audio ad duration in seconds.");
+    addField("maxduration", &Audio::maxduration, "Maximum audio ad duration in seconds.");
+    addField("protocols", &Audio::protocols, "Array of supported audio protocols.");
+    addField("startdelay", &Audio::startdelay, "Indicates the start delay in seconds for pre-roll, mid-roll, or post-roll ad placements.");
+    addField("sequence", &Audio::sequence, "sequence number will allow for the coordinated delivery of multiple creatives.");
+    addField("battr", &Audio::battr, "Blocked creative attributes.");
+    addField("maxextended", &Audio::maxextended, "Maximum extended ad duration if extension is allowed.");
+    addField("minbitrate", &Audio::minbitrate, "Minimum bit rate in Kbps.");
+    addField("maxbitrate", &Audio::maxbitrate, "Maximum bit rate in Kbps.");
+    addField("delivery", &Audio::delivery, "upported delivery methods.");
+    addField("companionad", &Audio::companionad, "Array of Banner objects.");
+    addField("api", &Audio::api, "List of supported API frameworks for this impression.");
+    addField("companiontype", &Audio::companiontype, "Supported DAAST companion ad types.");
+    addField("maxseq", &Audio::maxseq, "The maximum number of ads that can be played in an ad pod.");
+    addField("feed", &Audio::feed, "Type of audio feed.");
+    addField("stitched", &Audio::stitched, "Indicates if the audio is stitched, where 0 = no, 1 = yes.");
+    addField("nvol", &Audio::nvol, "Volume normalization mode.");
+    addField("dl", &Audio::dl, "Indicates if the audio file can be downloaded by the user.");
+    addField("ext", &Audio::ext, "Extensions");
+}
 
 } // namespace Datacratic
