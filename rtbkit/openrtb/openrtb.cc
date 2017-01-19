@@ -78,4 +78,14 @@ Regulations::
 {
 }
 
+Format::
+~Format()
+{
+}
+
+Audio::
+~Audio()
+{
+}
+
 } // namespace OpenRTB

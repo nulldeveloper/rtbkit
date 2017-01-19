@@ -379,4 +379,16 @@ struct DefaultDescription<OpenRTB::Regulations>
     DefaultDescription();
 };
 
+template<>
+struct DefaultDescription<OpenRTB::Format>
+    : public StructureDescription<OpenRTB::Format> {
+    DefaultDescription();
+};
+
+template<>
+struct DefaultDescription<OpenRTB::Audio>
+        : public StructureDescription<OpenRTB::Audio> {
+    DefaultDescription();
+};
+
 } // namespace Datacratic
