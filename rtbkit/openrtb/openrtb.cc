@@ -88,4 +88,14 @@ Audio::
 {
 }
 
+Source::
+~Source()
+{
+}
+
+Metric::
+~Metric()
+{
+}
+
 } // namespace OpenRTB

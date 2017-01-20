@@ -391,4 +391,16 @@ struct DefaultDescription<OpenRTB::Audio>
     DefaultDescription();
 };
 
+template<>
+struct DefaultDescription<OpenRTB::Source>
+        : public StructureDescription<OpenRTB::Source> {
+    DefaultDescription();
+};
+
+template<>
+struct DefaultDescription<OpenRTB::Metric>
+        : public StructureDescription<OpenRTB::Metric> {
+    DefaultDescription();
+};
+
 } // namespace Datacratic

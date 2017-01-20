@@ -47,11 +47,14 @@ DefaultDescription()
     addField("at", &BidRequest::at, "Type of auction: 1(st) or 2(nd)");
     addField("tmax", &BidRequest::tmax, "Maximum response time (ms)");
     addField("wseat", &BidRequest::wseat, "Allowable seats");
+    addField("bseat", &BidRequest::bseat, "Banned seats");
     addField("allimps", &BidRequest::allimps, "Set to 1 if all impressions on this page are in the bid request");
     addField("cur", &BidRequest::cur, "List of acceptable currencies to bid in");
+    addField("wlang", &BidRequest::wlang, "White list of languages for creatives.");
     addField("bcat", &BidRequest::bcat, "Blocked advertiser content categories");
     addField("badv", &BidRequest::badv, "Blocked adversiser domains");
     addField("bapp", &BidRequest::bapp, "Block list of applications by their platform-specific exchange- independent application identifiers.");
+    addField("source", &BidRequest::source, "Data about inventory source.");
     addField("regs", &BidRequest::regs, "Legal regulations");
     addField("ext", &BidRequest::ext, "Extended fields outside of protocol");
     addField("unparseable", &BidRequest::unparseable, "Unparseable fields are collected here");
@@ -62,7 +65,8 @@ DefaultDescription()
 {
     addField("id", &Impression::id, "Impression ID within bid request",
              new StringIdDescription());
-    addField("audio", &Impression::audio, "Audio information if an audio ad")
+    addField("metric", &Impression::metric, "An array of metric objects");
+    addField("audio", &Impression::audio, "Audio information if an audio ad");
     addField("native", &Impression::native, "Native information if a native ad");
     addField("banner", &Impression::banner, "Banner information if a banner ad");
     addField("video", &Impression::video, "Video information if a video ad");
@@ -141,6 +145,7 @@ DefaultDescription()
     addField("topframe", &Banner::topframe, "Is it in the top frame or an iframe?");
     addField("expdir", &Banner::expdir, "Expandable ad directions");
     addField("api", &Banner::api, "Supported APIs");
+    addField("vcm", &Banner::vcm, "Relevant only for Banner objects used with a Video object.");
     addField("ext", &Banner::ext, "Extensions to the protocol go here");
 }
 
@@ -156,6 +161,7 @@ DefaultDescription()
     addField("w", &Video::w, "Width of player in pixels");
     addField("h", &Video::h, "Height of player in pixels");
     addField("startdelay", &Video::startdelay, "Starting delay in seconds of video");
+    addField("placement", &Video::placement, "Placement type for the impression.");
     addField("sequence", &Video::sequence, "Which ad number in the video");
     addField("battr", &Video::battr, "Which creative attributes are blocked");
     addField("maxextended", &Video::maxextended, "Maximum extended video ad duration");
@@ -163,6 +169,7 @@ DefaultDescription()
     addField("maxbitrate", &Video::maxbitrate, "Maximum bitrate for ad in kbps");
     addField("boxingallowed", &Video::boxingallowed, "Is letterboxing allowed?");
     addField("playbackmethod", &Video::playbackmethod, "Available playback methods");
+    addField("playbackend", &Video::playbackend, "The event that causes playback to end");
     addField("delivery", &Video::delivery, "Available delivery methods");
     addField("pos", &Video::pos, "Ad position");
     addField("companionad", &Video::companionad, "List of companion banners available");
@@ -261,6 +268,7 @@ DefaultDescription()
     addField("macmd5", &Device::macmd5, "MD5 Mac Address");
     addField("ipv6", &Device::ipv6, "Device IPv6 address");
     addField("carrier", &Device::carrier, "Carrier or ISP derived from IP address");
+    addField("mccmnc", &Device::mccmnc, "Mobile carrier as the concatenated MCC-MNC code.");
     addField("language", &Device::language, "Browser language");
     addField("make", &Device::make, "Device make");
     addField("model", &Device::model, "Device model");
@@ -334,6 +342,8 @@ DefaultDescription()
     addField("adid", &Bid::adid, "ID of ad to be served if bid is won",
              new StringIdDescription());
     addField("nurl", &Bid::nurl, "Win notice/ad markup URL");
+    addField("burl", &Bid::burl, "Billing URL");
+    addField("lurl", &Bid::lurl, "Loss URL");
     addField("adm", &Bid::adm, "Ad markup");
     addField("adomain", &Bid::adomain, "Advertiser domain(s)");
     addField("bundle", &Bid::bundle, "Bundle");
@@ -347,9 +357,12 @@ DefaultDescription()
     addField("api", &Bid::api, "API required by the markup if applicable.");
     addField("protocol", &Bid::protocol, "Video response protocol of the markup if applicable.");
     addField("qagmediarating", &Bid::qagmediarating, "Creative media rating per IQG guidelines");
+    addField("language", &Bid::language, "Language of the creative");
     addField("dealid", &Bid::dealid, "Deal Id for PMP Auction");
     addField("w", &Bid::w, "width of ad in pixels");
     addField("h", &Bid::h, "height of ad in pixels");
+    addField("wratio", &Bid::wratio, "Relative width of the creative when expressing size as a ratio.");
+    addField("hratio", &Bid::hratio, "Relative height of the creative when expressing size as a ratio");
     addField("exp", &Bid::exp, "Advisory as to the number of seconds the bidder is willing to wait between the auction and the actual impression.");
     addField("ext", &Bid::ext, "Extensions");
 }
@@ -409,6 +422,9 @@ DefaultDescription()
 {
     addField("w", &Format::w, "Width");
     addField("h", &Format::h, "Height");
+    addField("wratio", &Format::wratio, "Relative width when expressing size as a ratio.");
+    addField("hratio", &Format::hratio, "Relative height when expressing size as a ratio.");
+    addField("wmin", &Format::wmin, "The minimum width in device independent pixels.");
     addField("ext", &Format::ext, "Extensions");
 }
 
@@ -435,6 +451,24 @@ DefaultDescription()
     addField("nvol", &Audio::nvol, "Volume normalization mode.");
     addField("dl", &Audio::dl, "Indicates if the audio file can be downloaded by the user.");
     addField("ext", &Audio::ext, "Extensions");
+}
+
+DefaultDescription<OpenRTB::Source>::
+DefaultDescription()
+{
+    addField("fd", &Source::fd, "Entity responsible for the final impression sale decision.");
+    addField("tid", &Source::tid, "Transaction ID.");
+    addField("pchain", &Source::pchain, "Payment ID chain string.");
+    addField("ext", &Format::ext, "Extensions");
+}
+
+DefaultDescription<OpenRTB::Metric>::
+DefaultDescription()
+{
+    addField("type", &Metric::type, "Type of metric being presented.");
+    addField("value", &Metric::value, "Number representing the value of the metric. 0.0-1.0");
+    addField("vendor", &Metric::vendor, "Source of the value using exchange curated string names.");
+    addField("ext", &Metric::ext, "Extensions");
 }
 
 } // namespace Datacratic
