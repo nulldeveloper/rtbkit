@@ -793,6 +793,27 @@ struct Metric {
 
 
 /*****************************************************************************/
+/* FORMAT                                                                    */
+/*****************************************************************************/
+
+/** 3.2.10 Format
+
+    This object represents an allowed size (i.e., height and width combination)
+    for a banner impression. These are typically used in an array for an impression
+    where multiple sizes are permitted.
+*/
+
+struct Format {
+    Datacratic::TaggedInt w;
+    Datacratic::TaggedInt h;
+    Datacratic::TaggedInt wratio;
+    Datacratic::TaggedInt hratio;
+    Datacratic::TaggedInt wmin;
+    Json::Value ext;       ///< Extensions go here
+};
+
+
+/*****************************************************************************/
 /* BANNER                                                                    */
 /*****************************************************************************/
 
@@ -936,27 +957,6 @@ struct Native {
     Datacratic::List<ApiFramework> api;
     Datacratic::List<CreativeAttribute> battr;
     Json::Value ext;
-};
-
-
-/*****************************************************************************/
-/* FORMAT                                                                    */
-/*****************************************************************************/
-
-/** 3.2.10 Format
-
-    This object represents an allowed size (i.e., height and width combination)
-    for a banner impression. These are typically used in an array for an impression
-    where multiple sizes are permitted.
-*/
-
-struct Format {
-    Datacratic::TaggedInt w;
-    Datacratic::TaggedInt h;
-    Datacratic::TaggedInt wratio;
-    Datacratic::TaggedInt hratio;
-    Datacratic::TaggedInt wmin;
-    Json::Value ext;       ///< Extensions go here
 };
 
 
