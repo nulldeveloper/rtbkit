@@ -335,7 +335,7 @@ struct VideoStartDelay: public Datacratic::TaggedEnum<VideoStartDelay> {
     The following table lists the various modes for when playback terminates.
 */
 
-struct PlaybackCessationModes: public Datacratic::TaggedEnum<VideoQuality> {
+struct PlaybackCessationModes: public Datacratic::TaggedEnum<PlaybackCessationModes> {
     enum Vals {
         UNSPECIFIED = -1,  ///< Not explicitly specified
 
