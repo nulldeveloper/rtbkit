@@ -771,43 +771,6 @@ struct Regulations { // New in OpenRTB 2.2
 
 
 /*****************************************************************************/
-/* IMPRESSION                                                                */
-/*****************************************************************************/
-
-/** 3.2.4 Impression Object
-
-    The “imp” object describes the ad position or impression being auctioned.
-    A single bid request can include multiple “imp” objects, a use case for
-    which might be an exchange that supports selling all ad positions on a
-    given page as a bundle.  Each “imp” object has a required ID so that
-    bids can reference them individually.  An exchange can also conduct
-    private auctions by restricting involvement to specific subsets of seats
-    within bidders.
-*/
-struct Impression {
-    ~Impression();
-    Datacratic::Id id;                             ///< Impression ID within BR
-    Datacratic::List<Metric> metric;
-    Datacratic::Optional<Audio> audio;
-    Datacratic::Optional<Native> native;
-    Datacratic::Optional<Banner> banner;           ///< If it's a banner ad
-    Datacratic::Optional<Video> video;             ///< If it's a video ad
-    Datacratic::UnicodeString displaymanager;          ///< What renders the ad
-    Datacratic::UnicodeString displaymanagerver;        ///< What version of that thing
-    Datacratic::TaggedBoolDef<0> instl;            ///< Is it interstitial
-    Datacratic::UnicodeString tagid;                   ///< ad tag ID for auction
-    Datacratic::TaggedDoubleDef<0> bidfloor;        ///< CPM bid floor
-    std::string bidfloorcur;                ///< Bid floor currency
-    Datacratic::TaggedInt clickbrowser;  ///< Indicates the type of browser opened upon clicking the creative in an app, where 0 = embedded, 1 = native.
-    Datacratic::TaggedInt secure;           ///< Flag that requires secure https assets (1 == yes) (OpenRTB 2.2)
-    Datacratic::List<std::string> iframebuster;         ///< Supported iframe busters (for expandable/video ads)
-    Datacratic::Optional<OpenRTB::PMP> pmp;        ///< Containing any Deals eligible for the impression object
-    Datacratic::TaggedInt exp;      ///< Advisory as to the number of seconds that may elapse between the auction and the actual impression.
-    Json::Value ext;                   ///< Extended impression attributes
-};
-
-
-/*****************************************************************************/
 /* Metric                                                                    */
 /*****************************************************************************/
 
@@ -1385,6 +1348,43 @@ struct Segment {
 
     /// Datacratic Extensions
     Datacratic::TaggedDouble segmentusecost;    ///< Cost of using segment in CPM
+};
+
+
+/*****************************************************************************/
+/* IMPRESSION                                                                */
+/*****************************************************************************/
+
+/** 3.2.4 Impression Object
+
+    The “imp” object describes the ad position or impression being auctioned.
+    A single bid request can include multiple “imp” objects, a use case for
+    which might be an exchange that supports selling all ad positions on a
+    given page as a bundle.  Each “imp” object has a required ID so that
+    bids can reference them individually.  An exchange can also conduct
+    private auctions by restricting involvement to specific subsets of seats
+    within bidders.
+*/
+struct Impression {
+    ~Impression();
+    Datacratic::Id id;                             ///< Impression ID within BR
+    Datacratic::List<Metric> metric;
+    Datacratic::Optional<Audio> audio;
+    Datacratic::Optional<Native> native;
+    Datacratic::Optional<Banner> banner;           ///< If it's a banner ad
+    Datacratic::Optional<Video> video;             ///< If it's a video ad
+    Datacratic::UnicodeString displaymanager;          ///< What renders the ad
+    Datacratic::UnicodeString displaymanagerver;        ///< What version of that thing
+    Datacratic::TaggedBoolDef<0> instl;            ///< Is it interstitial
+    Datacratic::UnicodeString tagid;                   ///< ad tag ID for auction
+    Datacratic::TaggedDoubleDef<0> bidfloor;        ///< CPM bid floor
+    std::string bidfloorcur;                ///< Bid floor currency
+    Datacratic::TaggedInt clickbrowser;  ///< Indicates the type of browser opened upon clicking the creative in an app, where 0 = embedded, 1 = native.
+    Datacratic::TaggedInt secure;           ///< Flag that requires secure https assets (1 == yes) (OpenRTB 2.2)
+    Datacratic::List<std::string> iframebuster;         ///< Supported iframe busters (for expandable/video ads)
+    Datacratic::Optional<OpenRTB::PMP> pmp;        ///< Containing any Deals eligible for the impression object
+    Datacratic::TaggedInt exp;      ///< Advisory as to the number of seconds that may elapse between the auction and the actual impression.
+    Json::Value ext;                   ///< Extended impression attributes
 };
 
 
