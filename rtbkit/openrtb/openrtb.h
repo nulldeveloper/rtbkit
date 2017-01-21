@@ -1000,32 +1000,6 @@ struct PMP { // New in OpenRTB 2.2
 
 
 /*****************************************************************************/
-/* SITE                                                                      */
-/*****************************************************************************/
-
-/** 3.2.13 Site Object
-
-    A site object should be included if the ad supported content is part of
-    a website (as opposed to an application).  A bid request must not contain
-    both a site object and an app object.
-
-    The site object itself and all of its parameters are optional, so default
-    values are not provided. If an optional parameter is not specified, it
-    should be considered unknown.  At a minimum, it’s useful to provide a
-    page URL or a site ID, but this is not strictly required.
-*/
-
-struct SiteInfo {
-    Datacratic::Url page;          ///< URL of the page to be shown
-    Datacratic::Url ref;           ///< Referrer URL that got user to page
-    Datacratic::UnicodeString search; ///< Search string that got user to page
-};
-
-struct Site: public Context, public SiteInfo {
-};
-
-
-/*****************************************************************************/
 /* PRODUCER / PUBLISHER                                                      */
 /*****************************************************************************/
 
@@ -1050,12 +1024,59 @@ struct Publisher {
     The producer is useful when content where the ad is shown is syndicated,
     and may appear on a completely different publisher.  The producer object
     itself and all of its parameters are optional, so default values are not
-    provided.  If an optional parameter is not specified, it should be 
+    provided.  If an optional parameter is not specified, it should be
     considered unknown.   This object is optional, but useful if the content
-    producer is different from the site publisher.    
+    producer is different from the site publisher.
 */
 
 typedef Publisher Producer;  /// They are the same...
+
+
+/*****************************************************************************/
+/* CONTEXT                                                                   */
+/*****************************************************************************/
+
+/** Common information between a Site and App. */
+
+struct Context {
+    ~Context();
+    Datacratic::Id id;        ///< Site ID on the exchange
+    Datacratic::UnicodeString name;  ///< Site name
+    Datacratic::UnicodeString domain;///< Site or app domain
+    Datacratic::List<ContentCategory> cat;        ///< IAB content categories for site/app
+    Datacratic::List<ContentCategory> sectioncat; ///< IAB content categories for subsection
+    Datacratic::List<ContentCategory> pagecat;    ///< IAB content categories for page/view
+    Datacratic::TaggedBool privacypolicy;           ///< Has a privacy policy
+    Datacratic::Optional<Publisher> publisher;    ///< Publisher of the site or app
+    Datacratic::Optional<Content> content;        ///< Content of the site or app
+    Datacratic::CSList keywords;                    ///< Keywords describing app
+    Json::Value ext;
+};
+
+/*****************************************************************************/
+/* SITE                                                                      */
+/*****************************************************************************/
+
+/** 3.2.13 Site Object
+
+    A site object should be included if the ad supported content is part of
+    a website (as opposed to an application).  A bid request must not contain
+    both a site object and an app object.
+
+    The site object itself and all of its parameters are optional, so default
+    values are not provided. If an optional parameter is not specified, it
+    should be considered unknown.  At a minimum, it’s useful to provide a
+    page URL or a site ID, but this is not strictly required.
+*/
+
+struct SiteInfo {
+    Datacratic::Url page;          ///< URL of the page to be shown
+    Datacratic::Url ref;           ///< Referrer URL that got user to page
+    Datacratic::UnicodeString search; ///< Search string that got user to page
+};
+
+struct Site: public Context, public SiteInfo {
+};
 
 
 /*****************************************************************************/
@@ -1160,28 +1181,6 @@ struct Content {
     Embeddable embeddable;   ///< 1 if embeddable, 0 otherwise
     std::vector<Data> data;
     Json::Value ext;         ///< Extensions go here, new in OpenRTB 2.1
-};
-
-
-/*****************************************************************************/
-/* CONTEXT                                                                   */
-/*****************************************************************************/
-
-/** Common information between a Site and App. */
-
-struct Context {
-    ~Context();
-    Datacratic::Id id;        ///< Site ID on the exchange
-    Datacratic::UnicodeString name;  ///< Site name
-    Datacratic::UnicodeString domain;///< Site or app domain
-    Datacratic::List<ContentCategory> cat;        ///< IAB content categories for site/app
-    Datacratic::List<ContentCategory> sectioncat; ///< IAB content categories for subsection
-    Datacratic::List<ContentCategory> pagecat;    ///< IAB content categories for page/view
-    Datacratic::TaggedBool privacypolicy;           ///< Has a privacy policy
-    Datacratic::Optional<Publisher> publisher;    ///< Publisher of the site or app
-    Datacratic::Optional<Content> content;        ///< Content of the site or app
-    Datacratic::CSList keywords;                    ///< Keywords describing app
-    Json::Value ext;
 };
 
 
