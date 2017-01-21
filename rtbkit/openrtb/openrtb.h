@@ -1058,6 +1058,59 @@ struct Publisher {
 typedef Publisher Producer;  /// They are the same...
 
 
+/*****************************************************************************/
+/* SEGMENT                                                                   */
+/*****************************************************************************/
+
+/** 3.2.22 Segment Object
+
+    The data and segment objects together allow data about the user to be
+    passed to bidders in the bid request.  Segment objects convey specific
+    units of information from the provider identified in the parent data
+    object.
+
+    The segment object itself and all of its parameters are optional, so
+    default values are not provided; if an optional parameter is not
+    specified, it should be considered unknown.
+*/
+struct Segment {
+    Datacratic::Id id;                         ///< Segment ID
+    Datacratic::UnicodeString name;                   ///< Segment name
+    Datacratic::UnicodeString value;                  ///< Segment value
+    Json::Value ext;               ///< Extensions go here, new in OpenRTB 2.1
+
+    /// Datacratic Extensions
+    Datacratic::TaggedDouble segmentusecost;    ///< Cost of using segment in CPM
+};
+
+
+/*****************************************************************************/
+/* DATA                                                                      */
+/*****************************************************************************/
+
+/** 3.2.21 Data Object
+
+    The data and segment objects together allow data about the user to be
+    passed to bidders in the bid request.  This data may be from multiple
+    sources (e.g., the exchange itself, third party providers) as specified
+    by the data object ID field.  A bid request can mix data objects from
+    multiple providers.
+
+    The data object itself and all of its parameters are optional, so
+    default values are not provided.  If an optional parameter is not
+    specified, it should be considered unknown.
+*/
+struct Data {
+    Datacratic::Id id;                           ///< Exchange specific data prov ID
+    Datacratic::UnicodeString name;                  ///< Data provider name
+    std::vector<Segment> segment;         ///< Segment of data
+    Json::Value ext;                 ///< Extensions go here, new in OpenRTB 2.1
+
+    /// Datacratic Extensions
+    std::string usecostcurrency;          ///< Currency of use cost
+    Datacratic::TaggedDouble datausecost;         ///< Cost of using the data (CPM)
+};
+
 
 /*****************************************************************************/
 /* CONTENT                                                                   */
@@ -1159,6 +1212,48 @@ struct App: public Context, public AppInfo {
 
 
 /*****************************************************************************/
+/* GEO                                                                       */
+/*****************************************************************************/
+
+/** 3.2.19 Geo Object
+
+    The geo object itself and all of its parameters are optional, so default
+    values are not provided. If an optional parameter is not specified, it
+    should be considered unknown.
+
+    Note that the Geo Object may appear in one or both the Device Object and
+    the User Object.  This is intentional, since the information may be
+    derived from either a device-oriented source (such as IP geo lookup), or
+    by user registration information (for example provided to a publisher
+    through a user registration). If the information is in conflict, it’s up
+    to the bidder to determine which information to use.
+*/
+
+struct Geo {
+    ~Geo();
+    Datacratic::TaggedDouble lat;        ///< Latitude of user (-90 to 90; South negative)
+    Datacratic::TaggedDouble lon;        ///< Longtitude (-180 to 180; west is negative)
+    LocationType type;      ///< Source of Geo data (table 6.15)
+    Datacratic::TaggedInt accuracy;
+    Datacratic::TaggedInt lastfix;
+    Datacratic::TaggedInt ipservice;
+    std::string country;         ///< Country code (ISO 3166-1 Alpha-3)
+    std::string region;          ///< Region code (ISO 3166-2)
+    std::string regionfips104;   ///< Region using FIPS 10-4
+    std::string metro;           ///< Metropolitan region (Google Metro code)
+    Datacratic::UnicodeString city;        ///< City name (UN Code for Trade and Transport Loc)
+    Datacratic::UnicodeString zip;             ///< Zip or postal code
+    Datacratic::TaggedInt utcoffset;
+    Json::Value ext;        ///< Extensions go here, new in OpenRTB 2.1
+
+    /// Datacratic extensions
+    std::string dma;             ///< Direct Marketing Association code
+    /// Rubicon extensions
+    Datacratic::TaggedBool latlonconsent;  ///< Has user given consent for lat/lon use?
+};
+
+
+/*****************************************************************************/
 /* DEVICE                                                                    */
 /*****************************************************************************/
 
@@ -1218,48 +1313,6 @@ struct Device {
 
 
 /*****************************************************************************/
-/* GEO                                                                       */
-/*****************************************************************************/
-
-/** 3.2.19 Geo Object
-
-    The geo object itself and all of its parameters are optional, so default
-    values are not provided. If an optional parameter is not specified, it
-    should be considered unknown.
-
-    Note that the Geo Object may appear in one or both the Device Object and
-    the User Object.  This is intentional, since the information may be
-    derived from either a device-oriented source (such as IP geo lookup), or
-    by user registration information (for example provided to a publisher
-    through a user registration). If the information is in conflict, it’s up
-    to the bidder to determine which information to use.
-*/
-
-struct Geo {
-    ~Geo();
-    Datacratic::TaggedDouble lat;        ///< Latitude of user (-90 to 90; South negative)
-    Datacratic::TaggedDouble lon;        ///< Longtitude (-180 to 180; west is negative)
-    LocationType type;      ///< Source of Geo data (table 6.15)
-    Datacratic::TaggedInt accuracy;
-    Datacratic::TaggedInt lastfix;
-    Datacratic::TaggedInt ipservice;
-    std::string country;         ///< Country code (ISO 3166-1 Alpha-3)
-    std::string region;          ///< Region code (ISO 3166-2)
-    std::string regionfips104;   ///< Region using FIPS 10-4
-    std::string metro;           ///< Metropolitan region (Google Metro code)
-    Datacratic::UnicodeString city;        ///< City name (UN Code for Trade and Transport Loc)
-    Datacratic::UnicodeString zip;             ///< Zip or postal code
-    Datacratic::TaggedInt utcoffset;
-    Json::Value ext;        ///< Extensions go here, new in OpenRTB 2.1
-
-    /// Datacratic extensions
-    std::string dma;             ///< Direct Marketing Association code
-    /// Rubicon extensions
-    Datacratic::TaggedBool latlonconsent;  ///< Has user given consent for lat/lon use?
-};
-
-
-/*****************************************************************************/
 /* USER                                                                      */
 /*****************************************************************************/
 
@@ -1294,60 +1347,6 @@ struct User {
     /// Rubicon extensions
     Datacratic::TaggedInt tz;              ///< User time zone in seconds after GMT
     Datacratic::TaggedInt sessiondepth;    ///< User session depth
-};
-
-
-/*****************************************************************************/
-/* DATA                                                                      */
-/*****************************************************************************/
-
-/** 3.2.21 Data Object
-
-    The data and segment objects together allow data about the user to be
-    passed to bidders in the bid request.  This data may be from multiple
-    sources (e.g., the exchange itself, third party providers) as specified
-    by the data object ID field.  A bid request can mix data objects from 
-    multiple providers.
-
-    The data object itself and all of its parameters are optional, so
-    default values are not provided.  If an optional parameter is not
-    specified, it should be considered unknown.
-*/
-struct Data {
-    Datacratic::Id id;                           ///< Exchange specific data prov ID
-    Datacratic::UnicodeString name;                  ///< Data provider name
-    std::vector<Segment> segment;         ///< Segment of data
-    Json::Value ext;                 ///< Extensions go here, new in OpenRTB 2.1
-
-    /// Datacratic Extensions
-    std::string usecostcurrency;          ///< Currency of use cost
-    Datacratic::TaggedDouble datausecost;         ///< Cost of using the data (CPM)
-};
-
-
-/*****************************************************************************/
-/* SEGMENT                                                                   */
-/*****************************************************************************/
-
-/** 3.2.22 Segment Object
-
-    The data and segment objects together allow data about the user to be
-    passed to bidders in the bid request.  Segment objects convey specific
-    units of information from the provider identified in the parent data
-    object.
-
-    The segment object itself and all of its parameters are optional, so
-    default values are not provided; if an optional parameter is not
-    specified, it should be considered unknown.
-*/
-struct Segment {
-    Datacratic::Id id;                         ///< Segment ID
-    Datacratic::UnicodeString name;                   ///< Segment name
-    Datacratic::UnicodeString value;                  ///< Segment value
-    Json::Value ext;               ///< Extensions go here, new in OpenRTB 2.1
-
-    /// Datacratic Extensions
-    Datacratic::TaggedDouble segmentusecost;    ///< Cost of using segment in CPM
 };
 
 
