@@ -961,24 +961,6 @@ struct Native {
 
 
 /*****************************************************************************/
-/* PMP                                                                       */
-/*****************************************************************************/
-
-/** 3.2.11 PMP object
-
-    The “pmp” object contains a parent object for usage within the context of private marketplaces
-    and the use of the RTB protocol to execute Direct Deals.
-
-*/
-struct PMP { // New in OpenRTB 2.2
-    ~PMP();
-    Datacratic::TaggedIntDef<0> privateAuction;    ///< Flag for private auction traffic : = 0 all bids, 1 = private deal
-    std::vector<Deal> deals;   ///< List of deals eligible for this impression
-    Json::Value ext;                ///< Extensions related to private deals between parties
-};
-
-
-/*****************************************************************************/
 /* DEAL                                                                      */
 /*****************************************************************************/
 
@@ -996,6 +978,24 @@ struct Deal { // New in OpenRTB 2.2
     Datacratic::List<std::string> wadomain; ///< array of advertiser domains allowed to bid on this deal
     Datacratic::TaggedInt at;               ///< type of auction : first / second price
     Json::Value ext;                        ///< Extension object
+};
+
+
+/*****************************************************************************/
+/* PMP                                                                       */
+/*****************************************************************************/
+
+/** 3.2.11 PMP object
+
+    The “pmp” object contains a parent object for usage within the context of private marketplaces
+    and the use of the RTB protocol to execute Direct Deals.
+
+*/
+struct PMP { // New in OpenRTB 2.2
+    ~PMP();
+    Datacratic::TaggedIntDef<0> privateAuction;    ///< Flag for private auction traffic : = 0 all bids, 1 = private deal
+    std::vector<Deal> deals;   ///< List of deals eligible for this impression
+    Json::Value ext;                ///< Extensions related to private deals between parties
 };
 
 
