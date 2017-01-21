@@ -459,7 +459,7 @@ DefaultDescription()
     addField("fd", &Source::fd, "Entity responsible for the final impression sale decision.");
     addField("tid", &Source::tid, "Transaction ID.");
     addField("pchain", &Source::pchain, "Payment ID chain string.");
-    addField("ext", &Format::ext, "Extensions");
+    addField("ext", &Source::ext, "Extensions");
 }
 
 DefaultDescription<OpenRTB::Metric>::
