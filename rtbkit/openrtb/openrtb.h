@@ -804,6 +804,7 @@ struct Metric {
 */
 
 struct Format {
+    ~Format();
     Datacratic::TaggedInt w;
     Datacratic::TaggedInt h;
     Datacratic::TaggedInt wratio;
