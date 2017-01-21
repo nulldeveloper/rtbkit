@@ -1033,53 +1033,6 @@ typedef Publisher Producer;  /// They are the same...
 
 
 /*****************************************************************************/
-/* CONTEXT                                                                   */
-/*****************************************************************************/
-
-/** Common information between a Site and App. */
-
-struct Context {
-    ~Context();
-    Datacratic::Id id;        ///< Site ID on the exchange
-    Datacratic::UnicodeString name;  ///< Site name
-    Datacratic::UnicodeString domain;///< Site or app domain
-    Datacratic::List<ContentCategory> cat;        ///< IAB content categories for site/app
-    Datacratic::List<ContentCategory> sectioncat; ///< IAB content categories for subsection
-    Datacratic::List<ContentCategory> pagecat;    ///< IAB content categories for page/view
-    Datacratic::TaggedBool privacypolicy;           ///< Has a privacy policy
-    Datacratic::Optional<Publisher> publisher;    ///< Publisher of the site or app
-    Datacratic::Optional<Content> content;        ///< Content of the site or app
-    Datacratic::CSList keywords;                    ///< Keywords describing app
-    Json::Value ext;
-};
-
-/*****************************************************************************/
-/* SITE                                                                      */
-/*****************************************************************************/
-
-/** 3.2.13 Site Object
-
-    A site object should be included if the ad supported content is part of
-    a website (as opposed to an application).  A bid request must not contain
-    both a site object and an app object.
-
-    The site object itself and all of its parameters are optional, so default
-    values are not provided. If an optional parameter is not specified, it
-    should be considered unknown.  At a minimum, it’s useful to provide a
-    page URL or a site ID, but this is not strictly required.
-*/
-
-struct SiteInfo {
-    Datacratic::Url page;          ///< URL of the page to be shown
-    Datacratic::Url ref;           ///< Referrer URL that got user to page
-    Datacratic::UnicodeString search; ///< Search string that got user to page
-};
-
-struct Site: public Context, public SiteInfo {
-};
-
-
-/*****************************************************************************/
 /* SEGMENT                                                                   */
 /*****************************************************************************/
 
@@ -1145,14 +1098,13 @@ struct Data {
 
     This object describes the content in which the impression will appear
     (may be syndicated or nonsyndicated content).  This object may be useful
-    in the situation where syndicated content contains impressions and 
+    in the situation where syndicated content contains impressions and
     does not necessarily match the publisher’s general content.  The exchange
     might or might not have knowledge of the page where the content is
     running, as a result of the syndication method.  (For example, video
-    impressions embedded in an iframe on an unknown web property 
+    impressions embedded in an iframe on an unknown web property
     or device.)
 */
-
 struct Content {
     ~Content();
     Datacratic::Id id;                   ///< Unique ID identifying the content
@@ -1181,6 +1133,53 @@ struct Content {
     Embeddable embeddable;   ///< 1 if embeddable, 0 otherwise
     std::vector<Data> data;
     Json::Value ext;         ///< Extensions go here, new in OpenRTB 2.1
+};
+
+
+/*****************************************************************************/
+/* CONTEXT                                                                   */
+/*****************************************************************************/
+
+/** Common information between a Site and App. */
+
+struct Context {
+    ~Context();
+    Datacratic::Id id;        ///< Site ID on the exchange
+    Datacratic::UnicodeString name;  ///< Site name
+    Datacratic::UnicodeString domain;///< Site or app domain
+    Datacratic::List<ContentCategory> cat;        ///< IAB content categories for site/app
+    Datacratic::List<ContentCategory> sectioncat; ///< IAB content categories for subsection
+    Datacratic::List<ContentCategory> pagecat;    ///< IAB content categories for page/view
+    Datacratic::TaggedBool privacypolicy;           ///< Has a privacy policy
+    Datacratic::Optional<Publisher> publisher;    ///< Publisher of the site or app
+    Datacratic::Optional<Content> content;        ///< Content of the site or app
+    Datacratic::CSList keywords;                    ///< Keywords describing app
+    Json::Value ext;
+};
+
+/*****************************************************************************/
+/* SITE                                                                      */
+/*****************************************************************************/
+
+/** 3.2.13 Site Object
+
+    A site object should be included if the ad supported content is part of
+    a website (as opposed to an application).  A bid request must not contain
+    both a site object and an app object.
+
+    The site object itself and all of its parameters are optional, so default
+    values are not provided. If an optional parameter is not specified, it
+    should be considered unknown.  At a minimum, it’s useful to provide a
+    page URL or a site ID, but this is not strictly required.
+*/
+
+struct SiteInfo {
+    Datacratic::Url page;          ///< URL of the page to be shown
+    Datacratic::Url ref;           ///< Referrer URL that got user to page
+    Datacratic::UnicodeString search; ///< Search string that got user to page
+};
+
+struct Site: public Context, public SiteInfo {
 };
 
 
