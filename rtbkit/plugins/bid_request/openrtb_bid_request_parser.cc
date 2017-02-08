@@ -32,6 +32,12 @@ openRTBBidRequestParserFactory(const std::string & version)
         return std::unique_ptr<OpenRTBBidRequestParser2point1>(new OpenRTBBidRequestParser2point1());
     } else if(version == "2.2") {
         return std::unique_ptr<OpenRTBBidRequestParser2point2>(new OpenRTBBidRequestParser2point2());
+    } else if(version == "2.3") {
+        return std::unique_ptr<OpenRTBBidRequestParser2point3>(new OpenRTBBidRequestParser2point3());
+    } else if(version == "2.4") {
+        return std::unique_ptr<OpenRTBBidRequestParser2point4>(new OpenRTBBidRequestParser2point4());
+    } else if(version == "2.5") {
+        return std::unique_ptr<OpenRTBBidRequestParser2point5>(new OpenRTBBidRequestParser2point5());
     }
 
     THROW(OpenRTBBidRequestLogs::error) << "Version : " << version << " not supported in RTBkit." << endl;
