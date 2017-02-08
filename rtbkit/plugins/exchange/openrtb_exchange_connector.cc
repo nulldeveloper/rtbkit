@@ -148,7 +148,7 @@ parseBidRequest(HttpAuctionHandler & connection,
         }
     }
 
-    if (!versionNotFound) {
+    if (versionNotFound) {
         connection.sendErrorResponse("UNSUPPORTED_OPENRTB_VERSION", "The request is required to be using version 2.1 or 2.2 of the OpenRTB protocol but requested " + openRtbVersion);
         return none;
     }
