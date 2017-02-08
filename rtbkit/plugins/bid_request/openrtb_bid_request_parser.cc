@@ -304,9 +304,19 @@ onImpression(OpenRTB::Impression & impression) {
         this->onVideo(*ctx.spot.video);
     }
 
+    if(ctx.spot.audio) {
+        this->onAudio(*ctx.spot.audio);
+    }
+
     // TODO Support tagFilters / mime filers
 
     ctx.br->imp.emplace_back(std::move(ctx.spot));
+}
+
+void
+OpenRTBBidRequestParser::
+onAudio(OpenRTB::Audio & audio) {
+    // todo implement checks for audio
 }
 
 void
