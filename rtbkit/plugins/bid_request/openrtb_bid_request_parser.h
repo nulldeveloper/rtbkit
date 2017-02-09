@@ -118,7 +118,7 @@ struct OpenRTBBidRequestParser2point2 : OpenRTBBidRequestParser {
         virtual void onDeal(OpenRTB::Deal & deal);
 };
 
-struct OpenRTBBidRequestParser2point3 : OpenRTBBidRequestParser2point2 {
+struct OpenRTBBidRequestParser2point3 : OpenRTBBidRequestParser {
 
     OpenRTBBidRequestParser2point3() {
         apiFrameworks = { {1, "VPAID 1.0"},
@@ -132,7 +132,7 @@ struct OpenRTBBidRequestParser2point3 : OpenRTBBidRequestParser2point2 {
     //Todo implement any checks needed for 2.3
 };
 
-struct OpenRTBBidRequestParser2point4 : OpenRTBBidRequestParser2point2 {
+struct OpenRTBBidRequestParser2point4 : OpenRTBBidRequestParser {
 
     OpenRTBBidRequestParser2point4() {
         apiFrameworks = { {1, "VPAID 1.0"},
@@ -146,7 +146,7 @@ struct OpenRTBBidRequestParser2point4 : OpenRTBBidRequestParser2point2 {
     //Todo implement any checks needed for 2.4
 };
 
-struct OpenRTBBidRequestParser2point5 : OpenRTBBidRequestParser2point2 {
+struct OpenRTBBidRequestParser2point5 : OpenRTBBidRequestParser {
 
     OpenRTBBidRequestParser2point5() {
         apiFrameworks = { {1, "VPAID 1.0"},
