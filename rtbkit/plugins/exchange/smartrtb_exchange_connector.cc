@@ -109,7 +109,7 @@ namespace RTBKIT {
         std::shared_ptr<BidRequest> result;
         try {
             ML::Parse_Context context("Bid Request", payload.c_str(), payload.size());
-            result.reset(OpenRTBBidRequestParser::openRTBBidRequestParserFactory(openRtbVersion)->parseBidRequest(context,
+            result.reset(OpenRTBBidRequestParser::openRTBBidRequestParserFactory(openRtbVersion)->parseBidRequest(context, exchangeName(),exchangeName()));
         }
         catch(ML::Exception const & e) {
             this->recordHit("error.parsingBidRequest");
