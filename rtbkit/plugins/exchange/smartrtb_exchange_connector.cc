@@ -94,8 +94,8 @@ namespace RTBKIT {
 
         // Check that it's version 2.0
         std::string openRtbVersion = it->second;
-        if (openRtbVersion != "2.0") {
-            connection.sendErrorResponse("UNSUPPORTED_OPENRTB_VERSION", "The request is required to be using version 2.0 of the OpenRTB protocol but requested " + openRtbVersion);
+        if (openRtbVersion != "2.2") {
+            connection.sendErrorResponse("UNSUPPORTED_OPENRTB_VERSION", "The request is required to be using version 2.2 of the OpenRTB protocol but requested " + openRtbVersion);
             return none;
         }
 
