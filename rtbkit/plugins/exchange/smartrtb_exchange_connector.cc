@@ -135,7 +135,7 @@ namespace RTBKIT {
 
     ExchangeConnector::ExchangeCompatibility
     SmartRTBExchangeConnector::getCampaignCompatibility(const AgentConfig &config,
-                                                                              bool includeReasons) const {
+                                                        bool includeReasons) const {
         ExchangeCompatibility result;
         result.setCompatible();
 
@@ -202,6 +202,10 @@ namespace RTBKIT {
         getAttr(result, pconf, "adid", crinfo->adid, includeReasons);
         getAttr(result, pconf, "adomain", crinfo->adomain, includeReasons);
         getAttr(result, pconf, "mimeTypes", crinfo->mimeTypes, includeReasons);
+
+        getAttr(result, pconf, "iurl", crinfo->iurl, includeReasons);
+        getAttr(result, pconf, "crid", crinfo->crid, includeReasons);
+
         result.info = crinfo;
 
         return result;
@@ -232,6 +236,9 @@ namespace RTBKIT {
 
         // Get the winning bid
         auto & resp = current->winningResponse(spotNum);
+
+//        response.cur = resp.cur;
+//        response.bidid = resp.bidid;
 
         // Find how the agent is configured.  We need to copy some of the
         // fields into the bid.
@@ -279,6 +286,9 @@ namespace RTBKIT {
         b.adm = crinfo->adm;
         b.adomain = crinfo->adomain;
         b.nurl = crinfo->nurl;
+
+        b.iurl = crinfo->iurl;
+        b.crid = Id(crinfo->crid);
     }
 
 } // Namespace rtbkit

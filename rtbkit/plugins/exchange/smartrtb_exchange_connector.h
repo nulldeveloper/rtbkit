@@ -54,6 +54,8 @@ namespace RTBKIT {
             std::string nurl;       ///< Win notice URL
             std::vector<std::string> adomain; ///< Advertiser Domain
             std::vector<std::string> mimeTypes; ///< MIME Types for this creative
+            std::string iurl;
+            std::string crid;
         };
 
         virtual ExchangeCompatibility
