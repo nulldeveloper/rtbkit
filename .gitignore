@@ -23,6 +23,7 @@ bootstrap.json
 perf.data
 rtbkit/dox/html
 *.swp
+fs_lock*
 
 # Created by https://www.gitignore.io/api/clion
 
