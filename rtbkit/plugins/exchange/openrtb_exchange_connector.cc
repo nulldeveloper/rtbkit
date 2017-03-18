@@ -14,7 +14,6 @@
 #include "soa/types/json_printing.h"
 #include <boost/any.hpp>
 #include <boost/lexical_cast.hpp>
-#include <vector>
 #include "jml/utils/file_functions.h"
 #include "jml/arch/info.h"
 #include "jml/utils/rng.h"
@@ -137,18 +136,9 @@ parseBidRequest(HttpAuctionHandler & connection,
         return none;
     }
 
-    // Check that the openrtb version is supported
+    // Check that it's version 2.1
     std::string openRtbVersion = it->second;
-    std::vector<std::string> supportedVersions = {"2.1", "2.2", "2.3", "2.4", "2.5"};
-
-    bool versionNotFound = true;
-    for (unsigned int x = 0; x < supportedVersions.size(); x++) {
-        if (supportedVersions[x] == openRtbVersion) {
-            versionNotFound = false;
-        }
-    }
-
-    if (versionNotFound) {
+    if (openRtbVersion != "2.1" && openRtbVersion != "2.2") {
         connection.sendErrorResponse("UNSUPPORTED_OPENRTB_VERSION", "The request is required to be using version 2.1 or 2.2 of the OpenRTB protocol but requested " + openRtbVersion);
         return none;
     }
