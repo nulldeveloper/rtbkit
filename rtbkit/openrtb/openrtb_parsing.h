@@ -295,12 +295,6 @@ struct DefaultDescription<OpenRTB::Site>
     DefaultDescription();
 };
 
-template <>
-struct DefaultDescription<OpenRTB::Native>
-    : public StructureDescription<OpenRTB::Native> {
-    DefaultDescription();
-};
-
 template<>
 struct DefaultDescription<OpenRTB::App>
     : public StructureDescription<OpenRTB::App> {
@@ -376,30 +370,6 @@ struct DefaultDescription<OpenRTB::PMP>
 template<>
 struct DefaultDescription<OpenRTB::Regulations>
     : public StructureDescription<OpenRTB::Regulations> {
-    DefaultDescription();
-};
-
-template<>
-struct DefaultDescription<OpenRTB::Format>
-    : public StructureDescription<OpenRTB::Format> {
-    DefaultDescription();
-};
-
-template<>
-struct DefaultDescription<OpenRTB::Audio>
-        : public StructureDescription<OpenRTB::Audio> {
-    DefaultDescription();
-};
-
-template<>
-struct DefaultDescription<OpenRTB::Source>
-        : public StructureDescription<OpenRTB::Source> {
-    DefaultDescription();
-};
-
-template<>
-struct DefaultDescription<OpenRTB::Metric>
-        : public StructureDescription<OpenRTB::Metric> {
     DefaultDescription();
 };
 

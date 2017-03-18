@@ -48,11 +48,6 @@ Video::
 {
 }
 
-Native::
-~Native()
-{
-}
-
 Content::
 ~Content()
 {
@@ -75,26 +70,6 @@ Deal::
 
 Regulations::
 ~Regulations()
-{
-}
-
-Format::
-~Format()
-{
-}
-
-Audio::
-~Audio()
-{
-}
-
-Source::
-~Source()
-{
-}
-
-Metric::
-~Metric()
 {
 }
 
