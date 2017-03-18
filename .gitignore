@@ -25,7 +25,7 @@ rtbkit/dox/html
 *.swp
 fs_lock*
 
-cmake-build-debug
+cmake-build-debug/*
 
 # Created by https://www.gitignore.io/api/clion
 
