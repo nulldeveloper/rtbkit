@@ -71,7 +71,9 @@ include $(JML_BUILD)/node.mk
 include $(JML_BUILD)/python.mk
 include $(JML_BUILD)/tcmalloc.mk
 
-SUBDIRS := jml tinyxml2 googleurl leveldb soa rtbkit
+
+SUBDIRS := rtbkit
+
 
 
 PREMAKE := 1
