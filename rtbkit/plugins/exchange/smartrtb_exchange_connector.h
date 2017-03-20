@@ -56,6 +56,7 @@ namespace RTBKIT {
             std::vector<std::string> mimeTypes; ///< MIME Types for this creative
             std::string iurl;
             std::string crid;
+            std::string cur;
         };
 
         virtual ExchangeCompatibility

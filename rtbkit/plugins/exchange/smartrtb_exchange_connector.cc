@@ -205,6 +205,7 @@ namespace RTBKIT {
 
         getAttr(result, pconf, "iurl", crinfo->iurl, includeReasons);
         getAttr(result, pconf, "crid", crinfo->crid, includeReasons);
+        getAttr(result, pconf, "cur", crinfo->cur, includeReasons);
 
         result.info = crinfo;
 
@@ -236,9 +237,6 @@ namespace RTBKIT {
 
         // Get the winning bid
         auto & resp = current->winningResponse(spotNum);
-
-//        response.cur = resp.cur;
-//        response.bidid = resp.bidid;
 
         // Find how the agent is configured.  We need to copy some of the
         // fields into the bid.
@@ -289,6 +287,9 @@ namespace RTBKIT {
 
         b.iurl = crinfo->iurl;
         b.crid = Id(crinfo->crid);
+
+        response.cur = crinfo->cur;
+        response.bidid = Id(auction.request->imp[0].id);
     }
 
 } // Namespace rtbkit
