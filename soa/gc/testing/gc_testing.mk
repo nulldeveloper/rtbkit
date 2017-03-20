@@ -7,5 +7,4 @@
 #------------------------------------------------------------------------------#
 
 $(eval $(call test,gc_test,gc,boost))
-$(eval $(call test,rcu_protected_test,gc,boost timed))
 

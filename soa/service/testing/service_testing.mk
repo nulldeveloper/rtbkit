@@ -24,9 +24,6 @@ $(eval $(call test,multiple_service_test,services,boost manual))
 $(eval $(call test,zookeeper_test,cloud,boost manual))
 $(eval $(call test,aws_test,cloud,boost))
 
-$(eval $(call test,redis_async_test,redis,boost))
-$(eval $(call test,redis_commands_test,redis,boost))
-
 $(eval $(call nodejs_test,opstats_js_test,opstats,,,manual))
 
 $(eval $(call test,statsd_connector_test,opstats,boost  manual))
