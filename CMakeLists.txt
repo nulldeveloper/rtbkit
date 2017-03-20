@@ -3,6 +3,14 @@ project(rtbkit_compiled)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set(Boost_INCLUDE_DIR /usr/local/Cellar/boost/1.60.0_1/include)
+set(Boost_LIBRARY_DIR /usr/local/Cellar/boost/1.60.0_1/lib)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+
+include_directories(.)
+
+
 set(SOURCE_FILES
         googleurl/base/basictypes.h
         googleurl/base/logging.cc
@@ -1418,13 +1426,5 @@ set(SOURCE_FILES
         tinyxml2/tinyxml2.h
         tinyxml2/xmltest.cpp
         tinyxml2/xmltest.h)
-
-include_directories(googleurl)
-include_directories(jml)
-include_directories(leveldb)
-include_directories(soa)
-include_directories(tinyxml2)
-include_directories(rtbkit)
-include_directories(.)
 
 add_executable(rtbkit_compiled ${SOURCE_FILES})
