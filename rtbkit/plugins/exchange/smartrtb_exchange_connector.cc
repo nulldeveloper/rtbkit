@@ -212,20 +212,29 @@ namespace RTBKIT {
         return result;
     }
 
+     bool SmartRTBExchangeConnector::checkAcceptableMimeTypes(const RTBKIT::AdSpot &spot,
+                                                                  const SmartRTBExchangeConnector::CreativeInfo *crinfo) const {
+
+         for (const auto& mimeType : spot.banner->mimes) {
+             if (find(crinfo->mimeTypes.begin(), crinfo->mimeTypes.end(), mimeType.type) != crinfo->mimeTypes.end()) {
+                 recordHit("matchedMime");
+                 return true;
+             }
+         }
+
+         recordHit("blockedMime");
+         return false;
+    }
+
     bool SmartRTBExchangeConnector::bidRequestCreativeFilter(const BidRequest &request, const AgentConfig &config,
-                                                             const void *info) const {
+                                                          const void *info) const {
         const auto crinfo = reinterpret_cast<const CreativeInfo*>(info);
 
         // now go through the spots.
         for (const auto& spot: request.imp) {
             //const auto& mime_types = spot.banner->mimes;
-            for (const auto& mimeType : spot.banner->mimes) {
-                if (std::find(crinfo->mimeTypes.begin(), crinfo->mimeTypes.end(), mimeType.type)
-                    != crinfo->mimeTypes.end()) {
-                    this->recordHit ("blockedMime");
-                    return true;
-                }
-            }
+            if (spot.banner->mimes.empty()) return true;
+            return checkAcceptableMimeTypes(spot, crinfo);
         }
 
         return false;
