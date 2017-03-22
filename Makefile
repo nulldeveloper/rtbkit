@@ -73,6 +73,7 @@ include $(JML_BUILD)/tcmalloc.mk
 
 
 SUBDIRS := rtbkit
+SUBDIRS := jml tinyxml2 googleurl leveldb soa rtbkit
 
 
 
