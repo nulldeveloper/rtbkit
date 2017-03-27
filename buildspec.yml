@@ -2,7 +2,7 @@ version: 0.1
 phases:
   build:
     commands:
-      ./make
+      make compile -j 8 NODEJS_ENABLED=0
 
 artifacts:
   type: zip
