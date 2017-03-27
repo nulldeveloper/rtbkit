@@ -205,26 +205,36 @@ namespace RTBKIT {
 
         getAttr(result, pconf, "iurl", crinfo->iurl, includeReasons);
         getAttr(result, pconf, "crid", crinfo->crid, includeReasons);
+        getAttr(result, pconf, "cur", crinfo->cur, includeReasons);
 
         result.info = crinfo;
 
         return result;
     }
 
+     bool SmartRTBExchangeConnector::checkAcceptableMimeTypes(const RTBKIT::AdSpot &spot,
+                                                                  const SmartRTBExchangeConnector::CreativeInfo *crinfo) const {
+
+         for (const auto& mimeType : spot.banner->mimes) {
+             if (find(crinfo->mimeTypes.begin(), crinfo->mimeTypes.end(), mimeType.type) != crinfo->mimeTypes.end()) {
+                 recordHit("matchedMime");
+                 return true;
+             }
+         }
+
+         recordHit("blockedMime");
+         return false;
+    }
+
     bool SmartRTBExchangeConnector::bidRequestCreativeFilter(const BidRequest &request, const AgentConfig &config,
-                                                             const void *info) const {
+                                                          const void *info) const {
         const auto crinfo = reinterpret_cast<const CreativeInfo*>(info);
 
         // now go through the spots.
         for (const auto& spot: request.imp) {
             //const auto& mime_types = spot.banner->mimes;
-            for (const auto& mimeType : spot.banner->mimes) {
-                if (std::find(crinfo->mimeTypes.begin(), crinfo->mimeTypes.end(), mimeType.type)
-                    != crinfo->mimeTypes.end()) {
-                    this->recordHit ("blockedMime");
-                    return true;
-                }
-            }
+            if (spot.banner->mimes.empty()) return true;
+            return checkAcceptableMimeTypes(spot, crinfo);
         }
 
         return false;
@@ -236,9 +246,6 @@ namespace RTBKIT {
 
         // Get the winning bid
         auto & resp = current->winningResponse(spotNum);
-
-//        response.cur = resp.cur;
-//        response.bidid = resp.bidid;
 
         // Find how the agent is configured.  We need to copy some of the
         // fields into the bid.
@@ -289,6 +296,9 @@ namespace RTBKIT {
 
         b.iurl = crinfo->iurl;
         b.crid = Id(crinfo->crid);
+
+        response.cur = crinfo->cur;
+        response.bidid = Id(auction.request->imp[0].id);
     }
 
 } // Namespace rtbkit

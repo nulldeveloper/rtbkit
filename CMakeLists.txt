@@ -10,9 +10,8 @@ include_directories(${Boost_INCLUDE_DIR})
 
 include_directories(.)
 
+
 set(SOURCE_FILES
-        build/x86_64/gen/rtbkit/plugins/exchange/realtime-bidding.pb.cc
-        build/x86_64/gen/rtbkit/plugins/exchange/realtime-bidding.pb.h
         googleurl/base/basictypes.h
         googleurl/base/logging.cc
         googleurl/base/logging.h
@@ -992,10 +991,10 @@ set(SOURCE_FILES
         rtbkit/plugins/exchange/rubicon_exchange_connector.h
         rtbkit/plugins/exchange/smaato_exchange_connector.cc
         rtbkit/plugins/exchange/smaato_exchange_connector.h
-        rtbkit/plugins/exchange/smartrtb_exchange_connector.cc
-        rtbkit/plugins/exchange/smartrtb_exchange_connector.h
         rtbkit/plugins/exchange/spotx_exchange_connector.cc
         rtbkit/plugins/exchange/spotx_exchange_connector.h
+        rtbkit/plugins/exchange/smartrtb_exchange_connector.h
+        rtbkit/plugins/exchange/smartrtb_exchange_connector.cc
         rtbkit/plugins/filter/testing/dynamic_filter_loading_test.cc
         rtbkit/plugins/filter/custom_filter.cc
         rtbkit/plugins/filter/custom_filter.h

@@ -56,6 +56,7 @@ namespace RTBKIT {
             std::vector<std::string> mimeTypes; ///< MIME Types for this creative
             std::string iurl;
             std::string crid;
+            std::string cur;
         };
 
         virtual ExchangeCompatibility
@@ -75,5 +76,7 @@ namespace RTBKIT {
             virtual void setSeatBid(Auction const & auction,
                                     int spotNum,
                                     OpenRTB::BidResponse &response) const;
+
+        bool checkAcceptableMimeTypes(const RTBKIT::AdSpot &spot, const SmartRTBExchangeConnector::CreativeInfo *crinfo) const;
     };
 }
