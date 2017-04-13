@@ -515,6 +515,7 @@ namespace {
 static const std::string BOOSTED_STUMPS_MAGIC = "BOOSTED_STUMPS";
 static const compact_size_t BOOSTED_STUMPS_VERSION = 4;
 
+#if 0
 void serialize_dist(const distribution<float> & dist,
                     DB::Store_Writer & store)
 {
@@ -557,7 +558,7 @@ void reconstitute_dist(distribution<float> & dist,
             store >> dist[i];
     }
 }
-
+#endif
 } // file scope
 
 COMPACT_PERSISTENT_ENUM_DECL(Boosted_Stumps::Output);

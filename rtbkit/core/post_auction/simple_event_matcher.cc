@@ -625,6 +625,7 @@ doBidResult(
 
 namespace {
 
+#if 0
 std::pair<Id, Id>
 unstringifyPair(const std::string & str)
 {
@@ -648,6 +649,7 @@ std::string stringifyPair(const std::pair<Id, Id> & vals)
 
     return stream.str();
 }
+#endif
 
 } // file scope
 

@@ -206,6 +206,8 @@ fromOpenRtb(OpenRTB::BidRequest && req,
         result->site.reset(req.site.release());
         if (!result->site->page.empty())
             result->url = result->site->page;
+        else if (!result->site->domain.empty())
+	  result->url = Url("http://mats/" + result->site->domain.rawString());
         else if (result->site->id)
             result->url = Url("http://" + result->site->id.toString() + ".siteid/");
 

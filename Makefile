@@ -1,7 +1,7 @@
 CXX ?= g++
 CC ?= gcc
 FC := gfortran
-NODEJS_ENABLED:=1
+NODEJS_ENABLED:=0
 PYTHON_ENABLED:=0
 
 LOCAL_DIR?=$(HOME)/local
@@ -73,8 +73,7 @@ include $(JML_BUILD)/tcmalloc.mk
 
 
 SUBDIRS := rtbkit
-SUBDIRS := jml tinyxml2 googleurl leveldb soa rtbkit
-
+SUBDIRS := jml tinyxml2 googleurl leveldb soa rtbkit ola_rtbkit
 
 
 PREMAKE := 1

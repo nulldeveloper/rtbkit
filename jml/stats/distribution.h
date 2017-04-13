@@ -24,6 +24,7 @@
 #define __stats__distribution_h__
 
 #include <vector>
+#include <cmath>
 #include "jml/utils/float_traits.h"
 #include "jml/arch/integer.h"
 #include "jml/arch/exception.h"

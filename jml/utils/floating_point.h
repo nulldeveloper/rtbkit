@@ -25,6 +25,7 @@
 
 
 #include "jml/compiler/compiler.h"
+#include <math.h>
 #include <limits>
 #include <stdint.h>
 

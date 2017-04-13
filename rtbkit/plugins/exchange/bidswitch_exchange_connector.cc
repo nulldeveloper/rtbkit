@@ -175,6 +175,7 @@ BidSwitchExchangeConnector::init() {
     #undef GENERATE_MACRO_FOR
 }
 
+#if 0
 namespace {
 std::vector<int> stringsToInts(const Json::Value& value) {
     const std::string & data = value.asString();
@@ -191,6 +192,7 @@ std::vector<int> stringsToInts(const Json::Value& value) {
     return ints;
 }
 }
+#endif
 
 ExchangeConnector::ExchangeCompatibility
 BidSwitchExchangeConnector::
@@ -329,6 +331,7 @@ struct AdtruthObject {
     }
 };
 
+#if 0
 AdtruthObject
 parseAdtruthObject(const Json::Value& adt) {
     AdtruthObject rc;
@@ -342,6 +345,7 @@ parseAdtruthObject(const Json::Value& adt) {
 
 
 }
+#endif
 
 }// anonymous
 

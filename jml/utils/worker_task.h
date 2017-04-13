@@ -12,6 +12,7 @@
 #include "jml/arch/format.h"
 #include "jml/arch/spinlock.h"
 #include "jml/arch/semaphore.h"
+#include <vector>
 #include <functional>
 #include <list>
 #include <map>

@@ -28,6 +28,7 @@ using namespace Datacratic;
 using namespace RTBKIT;
 using namespace Redis;
 
+#if 0
 namespace {
 
 void
@@ -40,6 +41,7 @@ RedisReplyFillSetOfStrings(const Redis::Reply & reply,
 }
 
 }
+#endif
 
 #if 0
 /* make sure that requests from the slave banker are properly deferred when
